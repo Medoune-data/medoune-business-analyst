@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  /* On booste le bleu pour qu'il soit plus vibrant, moins "vieux cabinet" */
+  --color-accent-primary: #0066FF; 
+  --color-brand-midnight: #020617;
+  --color-silver-silk: #f1f5f9;
+  
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+:root {
+  --background: #020617;
+  --foreground: #f1f5f9;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bordure de finition "Luxe" sur le contour de l'écran */
+@media (min-width: 1024px) {
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    z-index: 50;
+  }
+}
