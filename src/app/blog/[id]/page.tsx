@@ -89,12 +89,20 @@ export default function BlogDetail() {
   td: ({node, ...props}) => <td className="border border-white/10 p-3 text-gray-400" {...props} />,
 
   // 3. Le style des Titres
-  h2: ({node, ...props}) => (
+ h1: ({node, ...props}) => (
+    <h1 className="text-white font-serif text-4xl md:text-5xl mt-20 mb-10 font-bold border-b border-white/10 pb-6" {...props} />
+  ), 
+
+h2: ({node, ...props}) => (
     <h2 className="text-white font-serif text-3xl mt-16 mb-8 italic border-l-4 border-accent-primary pl-6" {...props} />
   ),
 
 h3: ({node, ...props}) => (
     <h3 className="text-white font-serif text-2xl mt-16 mb-6 italic border-l-2 border-accent-primary pl-4 font-semibold" {...props} />
+  ),
+
+h4: ({node, ...props}) => (
+    <h4 className="text-accent-primary font-mono text-sm uppercase tracking-[0.3em] mt-10 mb-4 font-bold" {...props} />
   ),
   
   // 4. Le style des Images (On a juste enlevé la marge ici)
