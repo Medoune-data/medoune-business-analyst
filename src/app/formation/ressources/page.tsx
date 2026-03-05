@@ -1,46 +1,44 @@
 import React from 'react';
 
 // 1. TA BASE DE DONNÉES DE FORMATION
-// C'est ici que tu ajouteras un nouveau bloc chaque semaine
 const SEANCES = [
   {
     id: 1,
     semaine: "Semaine 1",
     titre: "Fondations & Nettoyage de Données",
     description: "Apprendre à structurer des données brutes de ventes Mobile Money à Yamoussoukro.",
-    youtubeId: "dQw4w9WgXcQ", // Remplace par l'ID de ta vidéo YouTube
+    youtubeId: "dQw4w9WgXcQ", 
     date: "04 Mars 2026",
     fichiers: [
       { nom: "01. Données Brutes (TP1)", url: "/downloads/s1/ventes_brutes.xlsx", type: "excel" },
       { nom: "02. Guide des Raccourcis", url: "/downloads/s1/raccourcis.pdf", type: "pdf" },
     ]
   },
-  // Quand la Semaine 2 arrive, tu copies-colles le bloc ci-dessus ici
 ];
 
 export default function RessourcesPage() {
-  // On récupère toujours la dernière séance publiée pour l'afficher en haut
   const derniereSeance = SEANCES[SEANCES.length - 1];
 
   return (
-    <main className="min-h-screen bg-black text-white py-16 px-4">
+    // CHANGEMENT ICI : pt-40 pour passer sous la Navbar et pb-20 pour l'équilibre
+    <main className="min-h-screen bg-black text-white pt-40 pb-20 px-4">
       <div className="max-w-5xl mx-auto">
         
         {/* EN-TÊTE */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-gray-800 pb-8">
           <div>
-            <h1 className="text-4xl font-bold text-blue-400 tracking-tighter">HUB DE RESSOURCES</h1>
-            <p className="text-gray-400 mt-2">Espace membre - Formation Excel Data Analyst</p>
+            <h1 className="text-4xl font-bold text-blue-400 tracking-tighter uppercase">Hub de Ressources</h1>
+            <p className="text-gray-400 mt-2 italic text-sm">Espace membre — Formation Excel Data Analyst</p>
           </div>
           <a href="/formation" className="mt-4 md:mt-0 text-[10px] uppercase tracking-widest text-gray-500 hover:text-white transition border border-gray-800 px-4 py-2 rounded">
             ← Quitter l'espace
           </a>
         </div>
 
-        {/* SECTION : LE DERNIER REPLAY (A la une) */}
+        {/* SECTION : LE DERNIER REPLAY */}
         <section className="mb-20">
           <div className="flex items-center gap-3 mb-6">
-            <span className="bg-blue-600 text-[10px] font-bold px-2 py-1 rounded">DERNIER REPLAY</span>
+            <span className="bg-blue-600 text-[10px] font-bold px-2 py-1 rounded animate-pulse">DERNIER REPLAY</span>
             <h2 className="text-2xl font-semibold">{derniereSeance.semaine} : {derniereSeance.titre}</h2>
           </div>
           
@@ -92,7 +90,6 @@ export default function RessourcesPage() {
             ))}
           </div>
         </section>
-
       </div>
     </main>
   );
