@@ -1,4 +1,26 @@
 import RegistrationForm from '@/components/RegistrationForm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Formation Excel : De Zéro à Business Analyst | Medoune Camara',
+  description: 'Rejoins la promo Excel 2026 à Yamoussoukro. Apprends le nettoyage de données, les TCD et la création de dashboards pro.',
+  openGraph: {
+    title: 'Formation Excel : De Zéro à Business Analyst',
+    description: 'Une formation pratique pour maîtriser la data. Inscription gratuite.',
+    url: 'https://medoune-business-analyst.vercel.app/formation',
+    siteName: 'Medoune Camara - Business Analyst',
+    images: [
+      {
+        url: 'https://medoune-business-analyst.vercel.app/og-formation.png', // On va créer cette image
+        width: 1200,
+        height: 630,
+        alt: 'Aperçu de la formation Excel',
+      },
+    ],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+};
 
 export default function FormationPage() {
   return (
