@@ -6,27 +6,28 @@ export default function Home() {
     <main className="bg-brand-midnight text-white overflow-x-hidden">
       
       {/* SECTION 1 : HERO */}
-<section className="min-h-screen flex flex-col justify-start pt-24 md:pt-28 px-6 lg:px-24 relative border-b border-white/5">
-  <div className="z-10 max-w-5xl">
-    
-    {/* --- POSITION REMONTÉE & BLEU AJUSTÉ --- */}
-    <div className="flex items-center gap-6 mb-12 animate-fade-in">
-      <span className="h-px w-10 bg-accent-primary"></span> 
-      <p className="font-mono uppercase tracking-[0.4em] text-[11px] font-bold">
-        {/* On reste sur ton bleu accent-primary */}
-        <span className="text-accent-primary">Medoune Camara</span> 
-        <span className="text-gray-600 mx-3">—</span> 
-        <span className="text-gray-400">Economist & Business Analyst </span>
-      </p>
-    </div>
-    
-    <div className="mb-12">
-      <h1 className="text-5xl md:text-[7vw] font-serif font-medium tracking-tight leading-[1] mb-8 text-white">
-        L'expertise pour <br />
-        <WordRotator />
-      </h1>
-      {/* ... reste de ton code (Description, Bouton, etc.) ... */}
-            <p className="text-gray-400 text-lg md:text-2xl leading-relaxed font-light max-w-3xl">
+      <section className="min-h-screen flex flex-col justify-start pt-24 md:pt-28 px-6 lg:px-24 relative border-b border-white/5">
+        <div className="z-10 max-w-5xl">
+          
+          {/* --- POSITION REMONTÉE & BLEU AJUSTÉ --- */}
+          <div className="flex items-center gap-6 mb-12 animate-fade-in">
+            <span className="h-px w-10 bg-accent-primary"></span> 
+            <p className="font-mono uppercase tracking-[0.4em] text-[11px] font-bold">
+              <span className="text-accent-primary">Medoune Camara</span> 
+              <span className="text-gray-600 mx-3">—</span> 
+              <span className="text-gray-400">Economist & Business Analyst </span>
+            </p>
+          </div>
+          
+          <div className="mb-12">
+            {/* Correction : mb-16 sur mobile pour laisser respirer le WordRotator */}
+            <h1 className="text-5xl md:text-[7vw] font-serif font-medium tracking-tight leading-[1.1] mb-16 md:mb-8 text-white">
+              L'expertise pour <br />
+              <WordRotator />
+            </h1>
+            
+            {/* Correction : mt-10 sur mobile pour éloigner le texte du titre */}
+            <p className="text-gray-400 text-lg md:text-2xl leading-relaxed font-light max-w-3xl mt-10 md:mt-0">
               J'accompagne les entreprises dans la maîtrise de leur <span className="text-white border-b border-accent-primary/30">stratégie de revenus</span> et le déploiement de solutions technologiques à fort impact.
             </p>
           </div>
@@ -44,7 +45,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Signature en arrière-plan (ajustée) */}
+        {/* Signature en arrière-plan */}
         <div className="absolute right-[-5%] bottom-20 rotate-[-90deg] opacity-[0.02] select-none pointer-events-none hidden lg:block">
           <h2 className="text-[15vw] font-serif font-bold whitespace-nowrap uppercase tracking-tighter">
             Medoune Camara
@@ -52,7 +53,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2 : LES PILIERS (Ce que tu apportes concrètement) */}
+      {/* SECTION 2 : LES PILIERS */}
       <section className="py-32 px-6 lg:px-24 bg-white/[0.01]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -88,7 +89,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 3 : CALL TO ACTION (Fin de page) */}
+      {/* SECTION 3 : CALL TO ACTION */}
       <section className="py-40 px-6 lg:px-24 border-t border-white/5 text-center bg-white/[0.02]">
         <h2 className="text-5xl md:text-7xl font-serif mb-12">Prêt à passer à <br /> <span className="italic font-light text-gray-500">l'échelle supérieure ?</span></h2>
         <div className="flex flex-col md:flex-row justify-center gap-8">
