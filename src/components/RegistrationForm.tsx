@@ -4,45 +4,71 @@ import React, { useState } from 'react';
 export default function RegistrationForm() {
   const [status, setStatus] = useState("");
 
- const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // REMPLACE L'ID CI-DESSOUS PAR TON ID FORMSPREE UNE FOIS CRÉÉ
+  const FORMSPREE_ID = "mvzwpplk"; 
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    
-    // Simulation d'enregistrement (On connectera la base de données plus tard)
-    setStatus("✅ Inscription réussie ! Redirection vers le groupe WhatsApp...");
-    
-    // Attendre 2 secondes pour que l'utilisateur lise le message de succès
-    setTimeout(() => {
-      window.location.href = "https://chat.whatsapp.com/LeucYf7OgY1Kneu8BCYoUc?mode=gi_t";
-    }, 2000);
+    const data = new FormData(form);
+
+    const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      setStatus("✅ Inscription validée ! Redirection vers WhatsApp...");
+      setTimeout(() => {
+        window.location.href = "https://chat.whatsapp.com/LeucYf7OgY1Kneu8BCYoUc?mode=gi_t";
+      }, 2000);
+    } else {
+      setStatus("❌ Erreur lors de l'envoi. Réessaie.");
+    }
   };
 
   return (
     <div className="bg-gray-900 p-8 rounded-xl border border-blue-500/30 shadow-2xl">
-      <h2 className="text-2xl font-bold mb-6 text-blue-400">Rejoins la promo Excel Data</h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-400">Rejoins la promo Excel</h2>
       <form onSubmit={handleSubmit} className="space-y-4 text-left">
-        <div>
-          <label className="block text-sm font-medium text-gray-400">Nom complet</label>
-          <input type="text" name="name" required className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-blue-500 outline-none transition" placeholder="Ex: Medoune Camara" />
+        
+        {/* Infos de base */}
+        <div className="grid grid-cols-2 gap-4">
+          <input type="text" name="prenom" required className="p-3 rounded bg-gray-800 border border-gray-700 outline-none text-sm" placeholder="Prénom" />
+          <input type="text" name="nom" required className="p-3 rounded bg-gray-800 border border-gray-700 outline-none text-sm" placeholder="Nom" />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-400">Email Universitaire</label>
-          <input type="email" name="email" required className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-blue-500 outline-none transition" placeholder="ton-email@univ.ci" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-400">Niveau d'études</label>
-          <select name="level" className="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-blue-500 outline-none transition">
-            <option>Licence 1</option>
-            <option>Licence 2</option>
-            <option>Licence 3</option>
-            <option>Master</option>
+
+        <input type="email" name="email" required className="w-full p-3 rounded bg-gray-800 border border-gray-700 outline-none text-sm" placeholder="Email (Gmail de préférence)" />
+
+        {/* Qualification Technique */}
+        <div className="space-y-3 pt-4 border-t border-gray-800">
+          <p className="text-xs font-bold uppercase tracking-widest text-gray-500">Configuration & Niveau</p>
+          
+          <select name="excel_level" required className="w-full p-3 rounded bg-gray-800 border border-gray-700 outline-none text-sm">
+            <option value="">Ton niveau actuel sur Excel ?</option>
+            <option value="debutant">Débutant (Je n'ai jamais ouvert Excel)</option>
+            <option value="intermediaire">Intermédiaire (Je connais les sommes)</option>
+            <option value="avance">Avancé (Je connais les TCD)</option>
           </select>
+
+          <div className="flex flex-col gap-2">
+            <label className="flex items-center gap-2 text-sm text-gray-400">
+              <input type="checkbox" name="has_pc" className="accent-blue-500" />
+              J'ai un PC avec Excel installé
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-400">
+              <input type="checkbox" name="can_meet" className="accent-blue-500" />
+              Je peux suivre des séances en direct sur Google Meet
+            </label>
+          </div>
         </div>
-        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105">
+
+        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105 mt-4">
           S'inscrire gratuitement
         </button>
       </form>
-      {status && <p className="mt-4 text-green-400 text-sm animate-pulse">{status}</p>}
+      {status && <p className="mt-4 text-center text-sm font-medium">{status}</p>}
     </div>
   );
 }
