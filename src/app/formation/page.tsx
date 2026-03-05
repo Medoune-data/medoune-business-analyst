@@ -2,7 +2,8 @@ import RegistrationForm from '@/components/RegistrationForm';
 
 export default function FormationPage() {
   return (
-    <main className="min-h-screen bg-black text-white py-20 px-4">
+    // pt-40 pour laisser de la place à la Navbar, pb-20 pour le bas
+    <main className="min-h-screen bg-black text-white pt-40 pb-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
           Formation Excel : De Zéro à Business Analyst
@@ -19,7 +20,8 @@ export default function FormationPage() {
               <li className="flex items-center gap-2">✅ <span className="text-gray-300">Nettoyage de données massives</span></li>
               <li className="flex items-center gap-2">✅ <span className="text-gray-300">Maîtrise de RECHERCHEV et TCD</span></li>
               <li className="flex items-center gap-2">✅ <span className="text-gray-300">Création de Dashboards interactifs</span></li>
-              <li className="flex items-center gap-2">✅ <span className="text-gray-300">Cas pratiques : Analyse Mobile Money</span></li>
+              {/* Clin d'œil à ton sujet de thèse */}
+              <li className="flex items-center gap-2">✅ <span className="text-gray-300">Cas pratiques : Analyse Mobile Money</span></li> 
             </ul>
           </div>
           
