@@ -98,7 +98,9 @@ export default function ProjectDetail() {
     <h2 className="text-white font-serif text-3xl mt-16 mb-8 italic border-l-4 border-accent-primary pl-6" {...props} />
   ),
 
-h3: ({node, ...props}) => <h3 className="text-white font-serif text-2xl mt-16 mb-6 italic" {...props} />,
+h3: ({node, ...props}) => (
+    <h3 className="text-white font-serif text-2xl mt-16 mb-6 italic border-l-2 border-accent-primary pl-4 font-semibold" {...props} />
+  ),
   
   // 4. Le style des Images (On a juste enlevé la marge ici)
   img: ({node, ...props}) => (
