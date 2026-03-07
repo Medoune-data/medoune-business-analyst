@@ -5,10 +5,10 @@ const SEANCES = [
   {
     id: 1,
     semaine: "Semaine 1",
-    titre: "Fondations & Nettoyage de Données",
-    description: "Apprendre à structurer des données brutes de ventes Mobile Money à Yamoussoukro.",
-    youtubeId: "dQw4w9WgXcQ", 
-    date: "04 Mars 2026",
+    titre: "Bienvenue à la formation.",
+    description: "Nous sommes à la semaine 1 veuillez Télécharger les supports de cours pour suivre le cours.",
+    youtubeId: "rH4ep7TcoR0", 
+    date: "07 Mars 2026",
     fichiers: [
       { nom: "01. Données Brutes (TP1)", url: "/downloads/s1/ventes_brutes.xlsx", type: "excel" },
       { nom: "02. Guide des Raccourcis", url: "/downloads/s1/raccourcis.pdf", type: "pdf" },
