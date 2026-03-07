@@ -20,7 +20,7 @@ export default function RegistrationForm() {
     if (response.ok) {
       setStatus("✅ Inscription validée ! Redirection vers WhatsApp...");
       setTimeout(() => {
-        window.location.href = "https://chat.whatsapp.com/LeucYf7OgY1Kneu8BCYoUc?mode=gi_t";
+        window.location.href = "https://chat.whatsapp.com/JrzfLKcOkAo9v70Z5IEvvl?mode=gi_t";
       }, 2000);
     } else {
       setStatus("❌ Erreur lors de l'envoi. Réessaie.");
