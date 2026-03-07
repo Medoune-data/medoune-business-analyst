@@ -140,8 +140,8 @@ h4: ({node, ...props}) => (
             <div className="border-t border-white/5 pt-6 p-6 bg-white/[0.02]">
               <h4 className="text-[10px] uppercase tracking-[0.3em] text-accent-primary mb-4 font-mono font-bold">Note de l'analyste</h4>
               <p className="text-[11px] text-gray-500 italic leading-relaxed">
-                Cette analyse est basée sur des données réelles et des modèles de segmentation propriétaires développés pour l'écosystème local.
-              </p>
+  {project.analysisNote || "Cette analyse est basée sur des données réelles."}
+</p>
             </div>
           </div>
         </section>

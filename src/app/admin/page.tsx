@@ -20,7 +20,8 @@ export default function AdminDashboard() {
     status: 'Déployé',
     content: '',
     type: 'projet',
-    coverUrl: '' 
+    coverUrl: '', 
+    analysisNote: ''
   });
   
   const router = useRouter();
@@ -45,28 +46,30 @@ export default function AdminDashboard() {
 
   // NOUVEAU : Fonction pour réinitialiser le formulaire proprement
   const resetForm = () => {
-    setForm({ 
-      title: '', category: '', description: '', tech: '', 
-      status: 'Déployé', content: '', coverUrl: '', type: 'projet' 
-    });
-    setEditingId(null);
-  };
+  setForm({ 
+    title: '', category: '', description: '', tech: '', 
+    status: 'Déployé', content: '', coverUrl: '', type: 'projet',
+    analysisNote: '' // AJOUT ICI
+  });
+  setEditingId(null);
+};
 
   // NOUVEAU : Fonction pour charger les données d'un item dans le formulaire
   const handleEdit = (item: any) => {
-    setEditingId(item.id);
-    setForm({
-      title: item.title,
-      category: item.category,
-      description: item.description,
-      tech: item.tech,
-      status: item.status,
-      content: item.content,
-      type: item.type,
-      coverUrl: item.coverUrl || ''
-    });
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // On remonte pour voir le formulaire
-  };
+  setEditingId(item.id);
+  setForm({
+    title: item.title,
+    category: item.category,
+    description: item.description,
+    tech: item.tech,
+    status: item.status,
+    content: item.content,
+    type: item.type,
+    coverUrl: item.coverUrl || '',
+    analysisNote: item.analysisNote || '' // AJOUT ICI
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,8 +150,15 @@ export default function AdminDashboard() {
             <option value="Beta">Statut: Brouillon</option>
           </select>
 
+          <textarea 
+  placeholder="Note de l'analyste (spécifique à ce projet)" 
+  className="md:col-span-2 bg-transparent border-b border-white/20 p-2 text-white outline-none focus:border-accent-primary min-h-[100px] text-sm italic" 
+  value={form.analysisNote} 
+  onChange={e => setForm({...form, analysisNote: e.target.value})} 
+/>
+
           <div className="md:col-span-2 flex gap-4 mt-4">
-            <button type="submit" className="flex-1 bg-white text-black py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-accent-primary hover:text-white transition-all">
+          <button type="submit" className="flex-1 bg-white text-black py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-accent-primary hover:text-white transition-all">
                 {editingId ? "Mettre à jour l'entrée" : "Lancer la publication"}
             </button>
             

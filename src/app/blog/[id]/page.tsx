@@ -122,6 +122,15 @@ h4: ({node, ...props}) => (
           </ReactMarkdown>
         </section>
 
+{post.analysisNote && (
+  <div className="mt-16 p-8 bg-white/[0.02] border-l-2 border-accent-primary">
+    <h4 className="text-[10px] uppercase tracking-[0.3em] text-accent-primary mb-4 font-mono font-bold">Note de l'analyste</h4>
+    <p className="text-sm text-gray-500 italic leading-relaxed">
+      {post.analysisNote}
+    </p>
+  </div>
+)}
+
         <footer className="mt-24 pt-12 border-t border-white/10 text-center">
           <p className="text-[10px] uppercase tracking-[0.3em] text-gray-600 mb-8 font-mono italic">
             Analyse publiée par Medoune Camara — Yamoussoukro, CI

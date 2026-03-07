@@ -28,7 +28,7 @@ export default function FormationPage() {
     <main className="min-h-screen bg-black text-white pt-40 pb-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-          Formation Excel : De Zéro à Business Analyst
+          Formation Excel : De Zéro à Data Analyst
         </h1>
         <p className="text-xl text-gray-400 mb-12">
           Apprends à manipuler les données, créer des tableaux de bord et maîtriser les outils 
@@ -43,7 +43,7 @@ export default function FormationPage() {
               <li className="flex items-center gap-2">✅ <span className="text-gray-300">Maîtrise de RECHERCHEV et TCD</span></li>
               <li className="flex items-center gap-2">✅ <span className="text-gray-300">Création de Dashboards interactifs</span></li>
               {/* Clin d'œil à ton sujet de thèse */}
-              <li className="flex items-center gap-2">✅ <span className="text-gray-300">Cas pratiques : Analyse Mobile Money</span></li> 
+              <li className="flex items-center gap-2">✅ <span className="text-gray-300">Cas pratiques : Analyse Du Dataset TradeCo</span></li> 
             </ul>
           </div>
           
