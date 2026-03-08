@@ -18,10 +18,26 @@ export default function RegistrationForm() {
     });
 
     if (response.ok) {
-      setStatus("✅ Inscription validée ! Redirection vers WhatsApp...");
+      setStatus("✅ Inscription validée ! Ton guide se télécharge...");
+
+      // 1. DÉCLENCHER LE TÉLÉCHARGEMENT AUTOMATIQUE
+      try {
+        const link = document.createElement('a');
+        link.href = '/docs/guide-prise-en-main.pdf'; // Assure-toi que le fichier est dans public/docs/
+        link.download = 'Guide_Prise_en_Main_Excel_Medoune.pdf'; 
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.error("Erreur de téléchargement", err);
+      }
+
+      // 2. REDIRECTION VERS WHATSAPP APRÈS 3 SECONDES
+      // On augmente un peu à 3000ms pour laisser le temps au téléchargement de démarrer
       setTimeout(() => {
         window.location.href = "https://chat.whatsapp.com/JrzfLKcOkAo9v70Z5IEvvl?mode=gi_t";
-      }, 2000);
+      }, 3000);
+
     } else {
       setStatus("❌ Erreur lors de l'envoi. Réessaie.");
     }
