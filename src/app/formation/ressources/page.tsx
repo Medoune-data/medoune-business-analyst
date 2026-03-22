@@ -7,8 +7,7 @@ const SEANCES = [
     semaine: "Semaine 1",
     titre: "Bienvenue à la formation.",
     description: "Nous sommes à la semaine 1 veuillez Télécharger les supports de cours pour suivre le cours.",
-    youtubeId: "QnMSm5Gq_tI
-", 
+    youtubeId: "QnMSm5Gq_tI", 
     date: "21 Mars 2026",
     fichiers: [
       { nom: "01. Données Brutes (TP1)", url: "/downloads/s1/TradeCo_Dataset_Formation.xlsx", type: "excel" },
