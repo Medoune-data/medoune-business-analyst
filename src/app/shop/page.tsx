@@ -10,14 +10,20 @@ export default function ShopPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const q = query(collection(db, "products"), orderBy("price", "asc"));
-      const snapshot = await getDocs(q);
-      setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      setLoading(false);
+      try {
+        const q = query(collection(db, "products"), orderBy("price", "asc"));
+        const snapshot = await getDocs(q);
+        const productsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log("Produits récupérés :", productsData); // Pour vérifier dans la console F12
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des produits:", error);
+      } finally {
+        setLoading(false); // Arrête le chargement quoi qu'il arrive
+      }
     };
     fetchProducts();
   }, []);
-
   const handleAction = (item: any) => {
     if (item.price === 0) {
       // Téléchargement direct pour les gratuit
