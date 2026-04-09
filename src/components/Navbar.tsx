@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion'; // Assure-toi d'avoir f
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navLinks = [
+ const navLinks = [
     { label: 'Analyses', href: '/blog' },
     { label: 'Projets', href: '/projets' },
     { label: 'Formation', href: '/formation' },
-    { label: 'Bibliothèque', href: '/shop' }, // TA NOUVELLE SECTION ICI
+    { label: 'Bibliothèque', href: '/shop' },
+    { label: 'Services', href: '/services' }, // <-- AJOUTE CETTE LIGNE ICI
     { label: 'À Propos', href: '/about' },
   ];
   return (
@@ -49,11 +50,13 @@ export default function Navbar() {
   </Link>
 ))}
             <Link 
-              href="mailto:medoune.c.k.camara.pro@gmail.com"
-              className="text-[10px] uppercase tracking-[0.2em] font-bold py-2 px-6 border border-white/10 text-white hover:border-accent-primary hover:text-accent-primary transition-all"
-            >
-              Discutons
-            </Link>
+  href="https://calendly.com/medoune-camara" // <-- TON LIEN CALENDLY ICI
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-[10px] uppercase tracking-[0.2em] font-bold py-2 px-6 border border-white/10 text-white hover:border-accent-primary hover:text-accent-primary transition-all"
+>
+  Réserver un Coaching
+</Link>
           </div>
 
           {/* --- BOUTON BURGER (Mobile uniquement) --- */}
@@ -101,11 +104,12 @@ export default function Navbar() {
                 className="pt-10 border-t border-white/10 mt-10"
               >
                 <Link 
-                  href="mailto:medoune.c.k.camara.pro@gmail.com"
-                  className="text-accent-primary font-mono uppercase tracking-widest text-xs"
-                >
-                  → medoune.c.k.camara.pro@gmail.com
-                </Link>
+  href="https://calendly.com/medoune-camara" // <-- TON LIEN CALENDLY ICI
+  target="_blank"
+  className="text-accent-primary font-mono uppercase tracking-widest text-xs"
+>
+  → Planifier une session (Calendly)
+</Link>
               </motion.div>
             </div>
           </motion.div>
