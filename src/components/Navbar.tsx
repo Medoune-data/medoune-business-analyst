@@ -10,7 +10,8 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Analyses', href: '/blog' },
     { label: 'Projets', href: '/projets' },
-    { label: 'Formation', href: '/formation' }, // Ajout de la formation
+    { label: 'Formation', href: '/formation' },
+    { label: 'Bibliothèque', href: '/shop' }, // TA NOUVELLE SECTION ICI
     { label: 'À Propos', href: '/about' },
   ];
   return (
@@ -38,6 +39,11 @@ export default function Navbar() {
     {item.label === 'Formation' && (
       <span className="ml-2 bg-accent-primary text-[8px] px-1.5 py-0.5 rounded-full text-brand-midnight font-bold animate-pulse">
         NEW
+      </span>
+    )}
+    {item.label === 'Bibliothèque' && (
+      <span className="ml-2 border border-accent-primary text-accent-primary text-[7px] px-1.5 py-0.5 rounded-full font-bold">
+        STORE
       </span>
     )}
   </Link>
