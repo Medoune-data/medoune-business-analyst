@@ -53,14 +53,20 @@ export default function AdminDashboard() {
     setLoading(false);
   };
 
-  const resetForm = () => {
-    setForm({ 
-      title: '', category: '', description: '', tech: '', 
-      status: 'Déployé', content: '', coverUrl: '', type: 'projet',
-      analysisNote: '', studentName: '', courseTitle: "Excel pour l'Analyse de Données", issueDate: '', projectUrl: '' 
-    });
-    setEditingId(null);
-  };
+  // VERS LA LIGNE 56
+const resetForm = () => {
+  setForm({ 
+    title: '', category: '', description: '', tech: '', 
+    status: 'Déployé', content: '', coverUrl: '', type: 'projet',
+    analysisNote: '', studentName: '', courseTitle: "Excel pour l'Analyse de Données", 
+    issueDate: '', projectUrl: '',
+    // AJOUTE CES 3 LIGNES ICI POUR CORRIGER L'ERREUR :
+    price: 0, 
+    fileUrl: '', 
+    isPremium: false
+  });
+  setEditingId(null);
+};
 
   const handleEdit = (item: any) => {
     setEditingId(item.id);
