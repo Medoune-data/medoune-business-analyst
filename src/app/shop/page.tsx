@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import Navigation from '@/components/Navigation'; // Ton composant de menu
+import Navbar from '@/components/Navbar'; // Ton composant de menu
 
 export default function ShopPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -33,7 +33,7 @@ export default function ShopPage() {
 
   return (
     <main className="min-h-screen bg-brand-midnight text-white">
-      <Navigation />
+      <Navbar />
       
       <header className="pt-32 pb-16 px-6 text-center">
         <h1 className="text-4xl font-serif mb-4">Bibliothèque & <span className="italic text-accent-primary">Solutions</span></h1>

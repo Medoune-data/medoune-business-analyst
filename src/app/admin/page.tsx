@@ -11,11 +11,12 @@ export default function AdminDashboard() {
   const [editingId, setEditingId] = useState<string | null>(null);
   
   const [form, setForm] = useState({ 
-    title: '', category: '', description: '', tech: '', 
-    status: 'Déployé', content: '', type: 'projet', coverUrl: '', 
-    analysisNote: '',
-    studentName: '', courseTitle: "Excel pour l'Analyse de Données", issueDate: '', projectUrl: '' 
-  });
+  title: '', category: '', description: '', tech: '', 
+  status: 'Déployé', content: '', type: 'projet', coverUrl: '', 
+  analysisNote: '',
+  studentName: '', courseTitle: "Excel pour l'Analyse de Données", issueDate: '', projectUrl: '',
+  price: 0, fileUrl: '', isPremium: false // <--- AJOUTE CES 3 LIGNES
+});
   
   const router = useRouter();
 
@@ -41,7 +42,13 @@ export default function AdminDashboard() {
       const snapCerts = await getDocs(qCerts);
       const certs = snapCerts.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'certificat' }));
 
-      setItems([...projects, ...certs]);
+
+// --- AJOUTE CE BLOC ICI ---
+      const qProducts = query(collection(db, "products"), orderBy("title", "asc"));
+      const snapProducts = await getDocs(qProducts);
+      const products = snapProducts.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'produit' }));
+
+      setItems([...projects, ...certs, ...products]);
     } catch (e) { console.error(e); }
     setLoading(false);
   };
@@ -64,7 +71,9 @@ export default function AdminDashboard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const collectionName = form.type === 'certificat' ? "certificates" : "projects";
+      const collectionName = 
+  form.type === 'certificat' ? "certificates" : 
+  form.type === 'produit' ? "products" : "projects"; // <--- AJOUTE LA CONDITION PRODUIT
       if (editingId) {
         await updateDoc(doc(db, collectionName, editingId), form);
         alert("Mise à jour réussie !");
@@ -77,11 +86,15 @@ export default function AdminDashboard() {
     } catch (error) { console.error(error); }
   };
 
-  const handleDelete = async (id: string, type: string) => {
+ const handleDelete = async (id: string, type: string) => {
     if (confirm(`Supprimer ce ${type} ?`)) {
-      const coll = type === 'certificat' ? "certificates" : "projects";
+      // On choisit la bonne collection dans Firebase
+      let coll = "projects"; 
+      if (type === 'certificat') coll = "certificates";
+      if (type === 'produit') coll = "products"; // <--- C'est cette ligne qui permet de gérer le Shop !
+      
       await deleteDoc(doc(db, coll, id));
-      fetchData();
+      fetchData(); // Rafraîchit la liste pour faire disparaître l'élément
     }
   };
 
@@ -97,8 +110,19 @@ export default function AdminDashboard() {
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20 bg-white/5 p-8 border border-white/10 backdrop-blur-sm relative">
           
-          <div className="md:col-span-2 flex gap-4 mb-4 p-1 bg-black/20 w-fit rounded">
-            {['projet', 'analyse', 'certificat'].map((t) => (
+          {form.type === 'produit' && (
+  <>
+    <input placeholder="Prix" type="number" value={form.price} onChange={e => setForm({...form, price: Number(e.target.value)})} className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" />
+    <input placeholder="Lien du fichier" value={form.fileUrl} onChange={e => setForm({...form, fileUrl: e.target.value})} className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" />
+    <label className="flex items-center gap-2 text-xs text-gray-500">
+      <input type="checkbox" checked={form.isPremium} onChange={e => setForm({...form, isPremium: e.target.checked})} />
+      Article Premium (WhatsApp)
+    </label>
+  </>
+)}
+
+<div className="md:col-span-2 flex gap-4 mb-4 p-1 bg-black/20 w-fit rounded">
+            {['projet', 'analyse', 'certificat', 'produit'].map((t) => (
               <button key={t} type="button" onClick={() => setForm({...form, type: t as any})} className={`px-6 py-2 text-[10px] uppercase tracking-widest transition-all ${form.type === t ? 'bg-white text-black font-bold' : 'text-gray-500'}`}>{t}</button>
             ))}
           </div>
@@ -138,7 +162,11 @@ export default function AdminDashboard() {
           {items.map(item => (
             <div key={item.id} className="flex justify-between items-center bg-white/[0.02] border border-white/5 p-4 hover:border-white/20 transition-all group">
               <div className="flex items-center gap-4">
-                <span className={`text-[7px] px-2 py-1 uppercase font-bold tracking-tighter ${item.type === 'certificat' ? 'bg-accent-primary text-white' : item.type === 'analyse' ? 'bg-blue-900 text-blue-100' : 'bg-gray-700 text-gray-300'}`}>{item.type}</span>
+                <span className={`text-[7px] px-2 py-1 uppercase font-bold tracking-tighter ${
+  item.type === 'certificat' ? 'bg-accent-primary text-white' : 
+  item.type === 'produit' ? 'bg-green-700 text-green-100' : // <--- AJOUTE CETTE LIGNE
+  item.type === 'analyse' ? 'bg-blue-900 text-blue-100' : 'bg-gray-700 text-gray-300'
+}`}>{item.type}</span>
                 <div>
                   <h4 className="text-white text-sm font-medium">{item.type === 'certificat' ? item.studentName : item.title}</h4>
                   <p className="text-[10px] text-gray-500 uppercase tracking-widest">{item.type === 'certificat' ? item.courseTitle : item.category}</p>
