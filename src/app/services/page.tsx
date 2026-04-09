@@ -3,25 +3,36 @@ import Navbar from '@/components/Navbar';
 
 const services = [
   {
-    title: "Data Visualization & Dashboards",
-    description: "Transformation de vos données brutes en tableaux de bord dynamiques et automatisés. Visualisez vos performances en temps réel.",
-    target: "PME & Managers",
+    title: "Audit & Stratégie de Croissance",
+    description: "Analyse de vos indicateurs pour identifier des leviers de revenus. Je transforme vos chiffres en décisions stratégiques.",
+    target: "Dirigeants & CEOs",
     price: "Sur devis",
-    icon: "📊"
+    icon: "📈",
+    link: "https://wa.me/2250564094530?text=Bonjour, je souhaite un Audit Stratégique." 
   },
   {
-    title: "Audit & Data Cleaning",
-    description: "Nettoyage en profondeur de vos bases de données sales. Correction des erreurs de saisie et structuration pour l'analyse.",
-    target: "Entreprises",
+    title: "Nettoyage & Structuration",
+    description: "Fichiers inexploitables ? Je normalise et sécurise vos bases de données pour une fiabilité totale.",
+    target: "Équipes Opérationnelles",
+    price: "À partir de 50.000 FCFA",
+    icon: "🧹",
+    link: "https://wa.me/2250564094530?text=Bonjour, j'ai besoin d'un nettoyage de données."
+  },
+  {
+    title: "Tableaux de Bord (Dashboards)",
+    description: "Création de rapports automatisés sur Power BI ou Excel. Suivez votre performance en un clic.",
+    target: "Managers & PME",
     price: "Sur devis",
-    icon: "🧹"
+    icon: "📊",
+    link: "https://wa.me/2250564094530?text=Bonjour, je souhaite créer un Dashboard."
   },
   {
     title: "Coaching Privé 1-on-1",
-    description: "Session intensive de 45 min pour résoudre un blocage technique ou apprendre une fonction spécifique sur Excel/Power BI.",
-    target: "Professionnels & Étudiants",
-    price: "À partir de 10.000 FCFA",
-    icon: "🎯"
+    description: "Session intensive pour débloquer vos fichiers ou monter en compétence. Résolution de problèmes garantie.",
+    target: "Pro & Étudiants",
+    price: "15.000 FCFA / session",
+    icon: "🎯",
+    link: "https://calendly.com/medoune-camara" // LIEN VERS CALENDLY
   }
 ];
 
@@ -48,11 +59,13 @@ export default function ServicesPage() {
               <div className="pt-6 border-t border-white/5 flex justify-between items-center">
                 <span className="text-xs font-mono text-gray-400">{service.price}</span>
                 <a 
-                  href={`https://wa.me/225XXXXXXXX?text=Bonjour Medoune, je suis intéressé par votre service : ${service.title}`}
-                  className="text-[10px] uppercase tracking-widest font-bold hover:text-accent-primary transition-colors"
-                >
-                  Me contacter →
-                </a>
+  href={service.link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-[10px] uppercase tracking-widest font-bold hover:text-accent-primary transition-colors"
+>
+  {service.title === "Coaching Privé 1-on-1" ? "Réserver mon créneau →" : "Me contacter →"}
+</a>
               </div>
             </div>
           ))}

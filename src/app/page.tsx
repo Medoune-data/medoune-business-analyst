@@ -96,7 +96,7 @@ export default function Home() {
             <Link href="/about" className="text-xs uppercase tracking-[0.3em] font-bold border-b-2 border-accent-primary pb-2 hover:text-accent-primary transition-all">
                 En savoir plus sur moi
             </Link>
-            <Link href="mailto:medoune.c.k.camara.pro@gmail.com" className="text-xs uppercase tracking-[0.3em] font-bold border-b-2 border-white/10 pb-2 hover:border-white transition-all">
+            <Link href="https://calendly.com/medoune-camara" className="text-xs uppercase tracking-[0.3em] font-bold border-b-2 border-white/10 pb-2 hover:border-white transition-all">
                 Démarrer une consultation
             </Link>
         </div>
