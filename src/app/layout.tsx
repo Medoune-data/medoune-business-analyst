@@ -51,7 +51,52 @@ export default function RootLayout({
       <body className="bg-brand-midnight antialiased font-sans">
         <Navbar />
         {children}
-      </body>
+     
+{/* SCRIPT JSON-LD POUR LE BRANDING GOOGLE & IA */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Medoune Camara",
+      "jobTitle": "Economist & Business Analyst",
+      "url": "https://medoune-business-analyst.vercel.app",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Yamoussoukro",
+        "addressCountry": "CI"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/medoune-kader-camara-a626b5373",
+        "https://web.facebook.com/MedouneCamara225",
+        "https://youtube.com/@medounecamara-s8n",
+        "https://x.com/Medoune_ecodata"
+      ],
+      "knowsAbout": [
+        "Business Intelligence",
+        "Revenue Strategy",
+        "SaaS Development",
+        "Economic Modeling",
+        "Data Analysis"
+      ],
+      "brand": [
+        {
+          "@type": "Brand",
+          "name": "Evalis Corp",
+          "description": "Solution SaaS de gestion commerciale avec IA pour les PME ivoiriennes."
+        },
+        {
+          "@type": "Brand",
+          "name": "StudBay",
+          "description": "Écosystème numérique centralisant l'économie des campus universitaires."
+        }
+      ]
+    })
+  }}
+/>
+
+ </body>
     </html>
   );
 }

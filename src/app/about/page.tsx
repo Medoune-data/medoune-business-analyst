@@ -48,27 +48,27 @@ export default function AboutPage() {
       </section>
 
       {/* --- LE RESTE DES SECTIONS RESTE IDENTIQUE --- */}
-      {/* SECTION 2 : LES CHIFFRES... */}
-      <section className="py-32 px-6 lg:px-24 border-b border-white/5">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="text-center md:text-left">
-            <span className="text-5xl font-serif italic text-white block mb-2">02</span>
-            <p className="text-[10px] uppercase tracking-widest text-gray-500">Plateformes SaaS Déployées</p>
-          </div>
-          <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
-            <span className="text-5xl font-serif italic text-white block mb-2">15+</span>
-            <p className="text-[10px] uppercase tracking-widest text-gray-500">PME en Étude de Flux</p>
-          </div>
-          <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
-            <span className="text-5xl font-serif italic text-white block mb-2">RFM</span>
-            <p className="text-[10px] uppercase tracking-widest text-gray-500">Modélisation de Segmentation</p>
-          </div>
-          <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
-            <span className="text-5xl font-serif italic text-white block mb-2">100%</span>
-            <p className="text-[10px] uppercase tracking-widest text-gray-500">Focus Croissance & Revenu</p>
-          </div>
-        </div>
-      </section>
+      {/* SECTION 2 : L'IMPACT EN CHIFFRES */}
+<section className="py-32 px-6 lg:px-24 border-b border-white/5">
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div className="text-center md:text-left">
+      <span className="text-5xl font-serif italic text-white block mb-2">02</span>
+      <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Écosystèmes SaaS Déployés</p>
+    </div>
+    <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
+      <span className="text-5xl font-serif italic text-white block mb-2">100+</span>
+      <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Professionnels & Étudiants Formés</p>
+    </div>
+    <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
+      <span className="text-5xl font-serif italic text-white block mb-2">RFM</span>
+      <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Modélisation de Segmentation</p>
+    </div>
+    <div className="text-center md:text-left border-l-0 md:border-l border-white/10 md:pl-12">
+      <span className="text-5xl font-serif italic text-white block mb-2">YAKRO</span>
+      <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Impact Économique Local</p>
+    </div>
+  </div>
+</section>
 
       {/* SECTION 3 : LE RÉCIT - VERSION NETTE ET LISIBLE */}
 <section className="py-32 px-6 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -82,81 +82,75 @@ export default function AboutPage() {
   </div>
 
   <div className="lg:col-span-8 space-y-12 text-gray-400 text-xl font-light leading-relaxed">
-    <p>
-      Tout commence à Yamoussoukro. J'ai vu des bâtisseurs, des commerçants et des entrepreneurs avec un potentiel immense, mais souvent freinés par l'opacité de leurs propres flux financiers.
-    </p>
-    <p className="text-white font-medium border-l-2 border-accent-primary pl-8 py-2">
-      Ma conviction est simple : la technologie n'a de valeur que si elle structure et amplifie l'économie réelle.
-    </p>
-    <p>
-      En tant que Business Analyst, j'ai choisi de me spécialiser dans la <strong>Customer & Revenue Strategy</strong>. Mon travail ne s'arrête pas à la création d'une application ; il consiste à modéliser le churn, à optimiser la CLV (Customer Lifetime Value) et à sécuriser chaque point de contact financier.
-    </p>
+  <p>
+    Basé à Yamoussoukro, je ne me contente pas d'analyser des chiffres : je bâtis les infrastructures qui structurent l'économie réelle. Mon approche fusionne la rigueur de l'économie et la puissance technologique pour transformer l'informel en succès mesurables.
+  </p>
+  <p className="text-white font-medium border-l-2 border-accent-primary pl-8 py-2">
+    En tant que fondateur, j'ai conçu <strong>Evalis Corp</strong> pour injecter l'IA au cœur des PME ivoiriennes, et <strong>StudBay</strong> pour professionnaliser l'économie des campus.
+  </p>
+  <p>
+    Ma spécialisation en <strong>Customer & Revenue Strategy</strong> me permet de modéliser le churn, d'optimiser la rentabilité (CLV) et de sécuriser chaque flux financier pour rendre la croissance de mes partenaires indiscutable.
+  </p>
+</div>
+</section>
+
+      {/* SECTION 4 : ÉCOSYSTÈMES & VISION */}
+<section className="py-32 bg-accent-primary/5 px-6 lg:px-24">
+  <div className="max-w-4xl mx-auto text-center">
+    <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-12">04. Écosystèmes Bâtis</h2>
+    <div className="space-y-12">
+      <div className="pb-12 border-b border-white/10">
+        <h3 className="text-4xl font-serif italic text-white mb-4">EVALIS Corp</h3>
+        <p className="text-gray-400 font-light italic leading-relaxed">
+          "Digitaliser la gestion des PME via l'IA et une architecture PWA offline-first, adaptée au terrain ivoirien."
+        </p>
+      </div>
+      <div>
+        <h3 className="text-4xl font-serif italic text-white mb-4">STUDBAY</h3>
+        <p className="text-gray-400 font-light italic leading-relaxed">
+          "L'infrastructure numérique qui centralise et sécurise l'économie informelle des campus universitaires."
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
-      {/* SECTION 4 : LES PRINCIPES (L'AUTORITÉ MORALE) */}
-      <section className="py-32 bg-white/[0.02] px-6 lg:px-24 border-y border-white/5">
-        <div className="max-w-4xl">
-          <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-16">02. Mes Principes Directeurs</h2>
-          <div className="space-y-20">
-            {[
-              { title: "Discipline > Motivation", desc: "La constance d'un système bien conçu battra toujours l'intensité d'un instant. Je bâtis pour la résilience." },
-              { title: "Donnée > Intuition", desc: "Dans un marché en croissance, l'intuition est un risque. L'analyse empirique est une protection." },
-              { title: "Souveraineté des Flux", desc: "Chaque PME doit posséder et comprendre ses données pour rester maître de sa propre croissance." }
-            ].map((principle, i) => (
-              <div key={i} className="group">
-                <h4 className="text-3xl font-serif italic mb-4 group-hover:text-accent-primary transition-colors">0{i+1}. {principle.title}</h4>
-                <p className="text-gray-500 max-w-2xl text-lg font-light leading-relaxed">{principle.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* SECTION 3 : L'ARSENAL STRATÉGIQUE (CŒUR MÉTIER) */}
+<section className="py-32 px-6 lg:px-24">
+  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div className="lg:col-span-5">
+      <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-8">03. Expertise</h2>
+      <h3 className="text-4xl font-serif mb-8">Un arsenal au service de la <span className="italic text-gray-500 font-light">croissance.</span></h3>
+    </div>
+    <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Carte 1 */}
+      <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
+        <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Revenue Strategy</h4>
+        <p className="text-gray-500 text-sm font-light leading-relaxed">Segmentation RFM, analyse du taux d'attrition (churn) et optimisation de la rentabilité client (CLV).</p>
+      </div>
+      {/* Carte 2 */}
+      <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
+        <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Business Intelligence</h4>
+        <p className="text-gray-400 text-sm font-light leading-relaxed">Transformation de données brutes (SQL) en tableaux de bord décisionnels interactifs sur Looker Studio.</p>
+      </div>
+      {/* Carte 3 */}
+      <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
+        <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Analyse Économique</h4>
+        <p className="text-gray-500 text-sm font-light leading-relaxed">Modélisation économétrique et expertise sur l'impact financier du Mobile Money dans les marchés émergents.</p>
+      </div>
+      {/* Carte 4 */}
+      <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
+        <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Data Analysis (R & SQL)</h4>
+        <p className="text-gray-500 text-sm font-light leading-relaxed">Extraction, nettoyage et analyse statistique de jeux de données complexes pour orienter les décisions business.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      {/* SECTION 5 : EXPERTISE TECHNIQUE DÉTAILLÉE (CŒUR MÉTIER) */}
-      <section className="py-32 px-6 lg:px-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-8">03. Expertise</h2>
-            <h3 className="text-4xl font-serif mb-8">Un arsenal au service de la <span className="italic text-gray-500 font-light">performance.</span></h3>
-          </div>
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
-              <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Revenue Strategy</h4>
-              <p className="text-gray-500 text-sm font-light">Segmentation RFM, analyse du taux d'attrition et optimisation de la rentabilité client sur le long terme.</p>
-            </div>
-            <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
-              <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Architecture Cloud</h4>
-              <p className="text-gray-500 text-sm font-light">Déploiement de solutions robustes sur Firebase pour la gestion de stocks et de CRM en temps réel.</p>
-            </div>
-            <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
-              <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Analyse Économétrique</h4>
-              <p className="text-gray-500 text-sm font-light">Modélisation de l'adoption du Mobile Money par les PME (Impact sur l'inclusion financière).</p>
-            </div>
-            <div className="p-8 border border-white/10 hover:bg-white/[0.02] transition-all">
-              <h4 className="text-white font-bold mb-4 uppercase tracking-tighter text-sm">Systèmes SaaS</h4>
-              <p className="text-gray-500 text-sm font-light">Conception de Progressive Web Apps (PWA) optimisées pour les environnements à faible connectivité.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6 : FOCUS ACTUEL (MOUVEMENT) */}
-      <section className="py-32 bg-accent-primary/5 px-6 lg:px-24">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-12">04. En Construction</h2>
-          <div className="space-y-12">
-            <div className="pb-12 border-b border-white/10">
-              <h3 className="text-3xl font-serif italic text-white mb-4">EVALIS Corp</h3>
-              <p className="text-gray-400 font-light italic">"Accompagner les commerçants ivoiriens vers une gestion financière transparente et automatisée."</p>
-            </div>
-            <div>
-              <h3 className="text-3xl font-serif italic text-white mb-4">Recherche Mobile Money</h3>
-              <p className="text-gray-400 font-light italic">"Quantifier l'impact réel de la digitalisation des paiements sur la pérennité des petites entreprises locales."</p>
-            </div>
-          </div>
-        </div>
-      </section>
+     {/* SECTION 6 : FOCUS ACTUEL (À SUPPRIMER) */}
+<section className="py-32 bg-accent-primary/5 px-6 lg:px-24">
+  {/* ... tout le contenu de la section 04. En Construction ... */}
+</section>
 
       {/* SECTION 7 : STACK TECHNIQUE (L'OUTILLAGE) */}
       <section className="py-32 px-6 lg:px-24 border-t border-white/5">
@@ -176,11 +170,12 @@ export default function AboutPage() {
         </h2>
         <div className="flex flex-col md:flex-row gap-6">
           <Link 
-            href="mailto:medoune.c.k.camara.pro@gmail.com"
-            className="px-12 py-5 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all shadow-2xl"
-          >
-            Discuter Stratégie
-          </Link>
+  href="https://calendly.com/medoune-camara/consultation-strategique-data-coaching"
+  target="_blank"
+  className="px-12 py-5 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all shadow-2xl"
+>
+  Réserver une Session Stratégique
+</Link>
           <Link 
             href="/projets"
             className="px-12 py-5 border border-white/10 text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
