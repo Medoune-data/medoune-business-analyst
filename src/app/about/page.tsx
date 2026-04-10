@@ -94,26 +94,24 @@ export default function AboutPage() {
 </div>
 </section>
 
-      {/* SECTION 4 : ÉCOSYSTÈMES & VISION */}
-<section className="py-32 bg-accent-primary/5 px-6 lg:px-24">
-  <div className="max-w-4xl mx-auto text-center">
-    <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-12">04. Écosystèmes Bâtis</h2>
-    <div className="space-y-12">
-      <div className="pb-12 border-b border-white/10">
-        <h3 className="text-4xl font-serif italic text-white mb-4">EVALIS Corp</h3>
-        <p className="text-gray-400 font-light italic leading-relaxed">
-          "Digitaliser la gestion des PME via l'IA et une architecture PWA offline-first, adaptée au terrain ivoirien."
-        </p>
-      </div>
-      <div>
-        <h3 className="text-4xl font-serif italic text-white mb-4">STUDBAY</h3>
-        <p className="text-gray-400 font-light italic leading-relaxed">
-          "L'infrastructure numérique qui centralise et sécurise l'économie informelle des campus universitaires."
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+      {/* SECTION 4 : LES PRINCIPES (L'AUTORITÉ MORALE) */}
+      <section className="py-32 bg-white/[0.02] px-6 lg:px-24 border-y border-white/5">
+        <div className="max-w-4xl">
+          <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-16">02. Mes Principes Directeurs</h2>
+          <div className="space-y-20">
+            {[
+              { title: "Discipline > Motivation", desc: "La constance d'un système bien conçu battra toujours l'intensité d'un instant. Je bâtis pour la résilience." },
+              { title: "Donnée > Intuition", desc: "Dans un marché en croissance, l'intuition est un risque. L'analyse empirique est une protection." },
+              { title: "Souveraineté des Flux", desc: "Chaque PME doit posséder et comprendre ses données pour rester maître de sa propre croissance." }
+            ].map((principle, i) => (
+              <div key={i} className="group">
+                <h4 className="text-3xl font-serif italic mb-4 group-hover:text-accent-primary transition-colors">0{i+1}. {principle.title}</h4>
+                <p className="text-gray-500 max-w-2xl text-lg font-light leading-relaxed">{principle.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* SECTION 3 : L'ARSENAL STRATÉGIQUE (CŒUR MÉTIER) */}
 <section className="py-32 px-6 lg:px-24">
@@ -147,10 +145,27 @@ export default function AboutPage() {
   </div>
 </section>
 
-     {/* SECTION 6 : FOCUS ACTUEL (À SUPPRIMER) */}
+     {/* SECTION 4 : ÉCOSYSTÈMES & VISION */}
 <section className="py-32 bg-accent-primary/5 px-6 lg:px-24">
-  {/* ... tout le contenu de la section 04. En Construction ... */}
+  <div className="max-w-4xl mx-auto text-center">
+    <h2 className="text-accent-primary font-mono uppercase tracking-[0.3em] text-[10px] mb-12">04. Écosystèmes Bâtis</h2>
+    <div className="space-y-12">
+      <div className="pb-12 border-b border-white/10">
+        <h3 className="text-4xl font-serif italic text-white mb-4">EVALIS Corp</h3>
+        <p className="text-gray-400 font-light italic leading-relaxed">
+          "Digitaliser la gestion des PME via l'IA et une architecture PWA offline-first, adaptée au terrain ivoirien."
+        </p>
+      </div>
+      <div>
+        <h3 className="text-4xl font-serif italic text-white mb-4">STUDBAY</h3>
+        <p className="text-gray-400 font-light italic leading-relaxed">
+          "L'infrastructure numérique qui centralise et sécurise l'économie informelle des campus universitaires."
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
+
 
       {/* SECTION 7 : STACK TECHNIQUE (L'OUTILLAGE) */}
       <section className="py-32 px-6 lg:px-24 border-t border-white/5">
