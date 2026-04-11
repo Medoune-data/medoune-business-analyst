@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, addDoc, serverTimestamp } from 'firebase/firestore';
 import Navbar from '@/components/Navbar'; // Ton composant de menu
 
 export default function ShopPage() {
@@ -24,14 +24,37 @@ export default function ShopPage() {
     };
     fetchProducts();
   }, []);
+  const [showLeadModal, setShowLeadModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [leadForm, setLeadForm] = useState({ name: '', whatsapp: '', email: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleAction = (item: any) => {
     if (item.price === 0) {
-      // Téléchargement direct pour les gratuit
-      window.open(item.fileUrl, '_blank');
+      setSelectedProduct(item);
+      setShowLeadModal(true);
     } else {
-      // Tunnel WhatsApp pour les Premium (Sans RCCM)
       const message = `Bonjour Medoune, je souhaite acquérir le produit "${item.title}" (${item.price} FCFA). Voici ma capture de dépôt.`;
-      window.location.href = `https://wa.me/225XXXXXXXX?text=${encodeURIComponent(message)}`;
+      window.location.href = `https://wa.me/2250564094530?text=${encodeURIComponent(message)}`;
+    }
+  };
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, "leads_shop"), {
+        ...leadForm,
+        productTitle: selectedProduct.title,
+        timestamp: serverTimestamp()
+      });
+      window.open(selectedProduct.fileUrl, '_blank');
+      setShowLeadModal(false);
+      setLeadForm({ name: '', whatsapp: '', email: '' });
+    } catch (error) {
+      console.error("Erreur:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,6 +99,29 @@ export default function ShopPage() {
           ))}
         </div>
       </section>
-    </main>
+   
+{/* MODAL DE CAPTURE DE LEAD */}
+      {showLeadModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
+          <div className="bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl max-w-md w-full relative shadow-2xl">
+            <button onClick={() => setShowLeadModal(false)} className="absolute top-6 right-6 text-gray-500 hover:text-white">✕</button>
+            <div className="text-center mb-8">
+              <div className="inline-block px-3 py-1 border border-accent-primary/30 text-accent-primary text-[8px] uppercase tracking-[0.3em] font-bold mb-4">Accès Privilégié</div>
+              <h3 className="text-2xl font-serif italic text-white mb-2">Dernière étape...</h3>
+              <p className="text-gray-500 text-sm font-light">Laisse tes infos pour recevoir ton fichier gratuit.</p>
+            </div>
+            <form onSubmit={handleLeadSubmit} className="space-y-4">
+              <input type="text" placeholder="Nom Complet" required className="w-full bg-white/5 border border-white/10 p-3 text-white text-sm outline-none focus:border-accent-primary" value={leadForm.name} onChange={e => setLeadForm({...leadForm, name: e.target.value})} />
+              <input type="text" placeholder="WhatsApp" required className="w-full bg-white/5 border border-white/10 p-3 text-white text-sm outline-none focus:border-accent-primary" value={leadForm.whatsapp} onChange={e => setLeadForm({...leadForm, whatsapp: e.target.value})} />
+              <input type="email" placeholder="Email" required className="w-full bg-white/5 border border-white/10 p-3 text-white text-sm outline-none focus:border-accent-primary" value={leadForm.email} onChange={e => setLeadForm({...leadForm, email: e.target.value})} />
+              <button type="submit" disabled={isSubmitting} className="w-full bg-white text-black py-4 font-bold uppercase tracking-widest text-[10px] hover:bg-accent-primary hover:text-white transition-all">
+                {isSubmitting ? "Chargement..." : "Télécharger maintenant"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+ </main>
   );
 }
