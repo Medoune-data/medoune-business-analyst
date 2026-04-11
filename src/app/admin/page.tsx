@@ -136,7 +136,16 @@ const resetForm = () => {
           {form.type === 'certificat' ? (
             <>
               <input placeholder="Nom de l'étudiant" className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" value={form.studentName} onChange={e => setForm({...form, studentName: e.target.value})} required />
-              <input placeholder="Formation" className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" value={form.courseTitle} onChange={e => setForm({...form, courseTitle: e.target.value})} required />
+              <select 
+  className="bg-black border-b border-white/20 p-2 outline-none focus:border-accent-primary text-white w-full cursor-pointer appearance-none" 
+  value={form.courseTitle} 
+  onChange={e => setForm({...form, courseTitle: e.target.value})} 
+  required
+>
+  <option value="Excel pour l'Analyse de Données">Excel pour l'Analyse de Données</option>
+  <option value="Maîtrise de SQL pour le Business">Maîtrise de SQL pour le Business</option>
+  <option value="Data Science & Stratégie avec R">Data Science & Stratégie avec R</option>
+</select>
               <input placeholder="Date (ex: Mars 2026)" className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" value={form.issueDate} onChange={e => setForm({...form, issueDate: e.target.value})} required />
               <input placeholder="Lien GitHub Projet" className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" value={form.projectUrl} onChange={e => setForm({...form, projectUrl: e.target.value})} />
             </>

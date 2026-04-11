@@ -58,9 +58,15 @@ export default function VerifyCertificate() {
               </p>
               
               <div className="py-6 border-y border-white/5">
-                <h3 className="text-xl text-white font-serif italic">
-                  {cert.courseTitle}
-                </h3>
+                <div className="mb-4">
+  <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border ${
+    cert.courseTitle?.includes("SQL") ? "border-blue-500 text-blue-500 bg-blue-500/10" :
+    cert.courseTitle?.includes("R") ? "border-purple-500 text-purple-500 bg-purple-500/10" :
+    "border-accent-primary text-accent-primary bg-accent-primary/10"
+  }`}>
+    {cert.courseTitle}
+  </span>
+</div>
                 <p className="text-xs font-mono mt-2 tracking-widest text-gray-600">
                   DÉLIVRÉ LE : {cert.issueDate}
                 </p>

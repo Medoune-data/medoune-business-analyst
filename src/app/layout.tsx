@@ -68,7 +68,7 @@ export default function RootLayout({
         "addressCountry": "CI"
       },
       "sameAs": [
-        "https://www.linkedin.com/in/medoune-kader-camara-a626b5373",
+        "https://www.linkedin.com/in/medoune-camara",
         "https://web.facebook.com/MedouneCamara225",
         "https://youtube.com/@medounecamara-s8n",
         "https://x.com/Medoune_ecodata"
