@@ -85,15 +85,15 @@ export default function RegistrationForm() {
         <div className="pt-4">
           <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Choisir votre cursus</label>
           <select 
-            className="w-full bg-black border border-white/10 p-4 outline-none focus:border-accent-primary text-white cursor-pointer hover:bg-white/5 transition-all appearance-none"
+            className="w-full bg-black border border-white/10 p-4 outline-none focus:border-accent-primary text-white cursor-pointer hover:bg-white/5 transition-all appearance-none font-medium"
             value={form.course}
             onChange={e => setForm({...form, course: e.target.value})}
             required
           >
-            <option value="Excel Pro">Module 01 : EXCEL PRO </option>
-            <option value="SQL Master">Module 02 : SQL MASTER </option>
-            <option value="R Strategy">Module 03 : R STRATEGY </option>
-            <option value="Pack Complet (Elite)">PACK COMPLET (ELITE) - Recommandé</option>
+            <option value="Excel Pro">Module 01 : EXCEL PRO — 25.000 FCFA</option>
+            <option value="SQL Master">Module 02 : SQL MASTER — 45.000 FCFA</option>
+            <option value="R Strategy">Module 03 : R STRATEGY — 75.000 FCFA</option>
+            <option value="Pack Complet (Elite)">PACK COMPLET (ELITE) — 125.000 FCFA</option>
           </select>
         </div>
       </div>
