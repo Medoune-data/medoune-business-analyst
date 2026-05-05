@@ -227,6 +227,20 @@ export default function AdminDashboard() {
               <input placeholder="Prix (FCFA)" type="number" value={form.price} onChange={e => f('price', Number(e.target.value))} className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" />
               <input placeholder="Lien du fichier" value={form.fileUrl} onChange={e => f('fileUrl', e.target.value)} className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" />
               <textarea placeholder="Description" className="md:col-span-2 bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary" value={form.description} onChange={e => f('description', e.target.value)} />
+
+<input 
+  placeholder="URL image de couverture" 
+  value={form.coverUrl} 
+  onChange={e => f('coverUrl', e.target.value)} 
+  className="bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary md:col-span-2" 
+/>
+<textarea
+  placeholder={"Sommaire / Aperçu du contenu (une ligne par point)\nEx:\n- Introduction à Power Query\n- Nettoyage des doublons\n- Dashboard final"}
+  value={form.content}
+  onChange={e => f('content', e.target.value)}
+  className="md:col-span-2 bg-transparent border-b border-white/20 p-2 outline-none focus:border-accent-primary font-light min-h-[120px]"
+/>
+
               <label className="flex items-center gap-2 text-xs text-gray-500">
                 <input type="checkbox" checked={form.isPremium} onChange={e => f('isPremium', e.target.checked)} />
                 Article Premium (WhatsApp)
