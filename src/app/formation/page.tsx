@@ -42,8 +42,8 @@ const COURSES = [
       dot: "bg-emerald-400",
       promo: "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
     },
-    duration: "12h de formation",
-    price: "35 000 FCFA",
+    duration: "20h de formation",
+    price: "25 000 FCFA",
     promoPrice: "15 000 FCFA",
     priceEur: "~23€",
     desc: "Dashboards interactifs et nettoyage de données pour PME.",
@@ -66,7 +66,7 @@ const COURSES = [
       dot: "bg-blue-400",
       promo: "bg-blue-500/10 border-blue-500/30 text-blue-300",
     },
-    duration: "10h de formation",
+    duration: "25h de formation",
     price: "35 000 FCFA",
     promoPrice: "25 000 FCFA",
     priceEur: "~38€",
@@ -90,9 +90,9 @@ const COURSES = [
       dot: "bg-purple-400",
       promo: "bg-purple-500/10 border-purple-500/30 text-purple-300",
     },
-    duration: "15h de formation",
-    price: "45 000 FCFA",
-    promoPrice: "45 000 FCFA", // pas de remise sur R
+    duration: "25h de formation",
+    price: "60 000 FCFA",
+    promoPrice: "45 000 FCFA", 
     priceEur: "~69€",
     desc: "Analyse économétrique et prédiction pour la stratégie de revenus.",
     modules: [
@@ -107,10 +107,10 @@ const COURSES = [
 
 const PACK_ELITE = {
   price: "100 000 FCFA",
-  promoPrice: "85 000 FCFA",
-  priceEur: "~130€",
-  savings: "15 000 FCFA économisés",
-  promoSavings: "30 000 FCFA économisés",
+  promoPrice: "65 000 FCFA",
+  priceEur: "~100€",
+  savings: "20 000 FCFA économisés",
+  promoSavings: "55 000 FCFA économisés",
 };
 
 export default function FormationPage() {

@@ -90,10 +90,10 @@ export default function RegistrationForm() {
             onChange={e => setForm({...form, course: e.target.value})}
             required
           >
-            <option value="Excel Pro">Module 01 : EXCEL PRO — 25.000 FCFA</option>
-            <option value="SQL Master">Module 02 : SQL MASTER — 45.000 FCFA</option>
-            <option value="R Strategy">Module 03 : R STRATEGY — 75.000 FCFA</option>
-            <option value="Pack Complet (Elite)">PACK COMPLET (ELITE) — 125.000 FCFA</option>
+            <option value="Excel Pro">Module 01 : EXCEL PRO</option>
+            <option value="SQL Master">Module 02 : SQL MASTER</option>
+            <option value="R Strategy">Module 03 : R STRATEGY</option>
+            <option value="Pack Complet (Elite)">PACK COMPLET (ELITE)</option>
           </select>
         </div>
       </div>
