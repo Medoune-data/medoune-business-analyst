@@ -428,7 +428,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(150, 150, 150);
-  doc.text("(c) 2026 Evalis Corp - Yamoussoukro, CI", W - 18, H - 13, { align: "right" });
+  doc.text("© 2026 Evalis Corp - Yamoussoukro, CI", W - 18, H - 13, { align: "right" });
 
   // ────────────────────────────────────────────────────────────────────────────
   // 6. SAUVEGARDE
