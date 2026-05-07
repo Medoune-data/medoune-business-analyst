@@ -1,7 +1,6 @@
 import { jsPDF } from "jspdf";
 import QRCode from "qrcode";
 
-// ─── TYPES ───────────────────────────────────────────────────────────────────
 interface CertificateData {
   id: string;
   studentName: string;
@@ -14,17 +13,14 @@ interface CertificateData {
   projectUrl?: string;
 }
 
-// ─── COULEURS PAR FORMATION ──────────────────────────────────────────────────
 const COURSE_CONFIG: Record<string, {
   accent: [number, number, number];
-  accentLight: [number, number, number];
-  label: string;
   skills: string[];
+  shortName: string;
 }> = {
   "Excel pour l'Analyse de Données": {
     accent: [16, 185, 129],
-    accentLight: [6, 60, 42],
-    label: "DATA ANALYSIS — OFFICE",
+    shortName: "EXCEL PRO",
     skills: [
       "Tableaux croisés dynamiques",
       "Dashboards interactifs",
@@ -34,21 +30,19 @@ const COURSE_CONFIG: Record<string, {
     ],
   },
   "Maîtrise de SQL pour le Business": {
-    accent: [96, 165, 250],
-    accentLight: [12, 68, 124],
-    label: "DATA ANALYSIS — DATABASE",
+    accent: [59, 130, 246],
+    shortName: "SQL MASTER",
     skills: [
       "Requêtes complexes (JOIN, CTE, Subqueries)",
-      "Agrégations & fenêtrage (WINDOW FUNCTIONS)",
+      "Window Functions (RANK, LAG, ROW_NUMBER)",
       "Optimisation de requêtes & index",
       "Gestion de bases de données relationnelles",
       "Extraction & transformation de données",
     ],
   },
   "Data Science & Stratégie avec R": {
-    accent: [167, 139, 250],
-    accentLight: [60, 52, 137],
-    label: "DATA SCIENCE — STRATEGY",
+    accent: [139, 92, 246],
+    shortName: "R STRATEGY",
     skills: [
       "Modélisation économétrique",
       "Analyse de régression (OLS, Logit)",
@@ -60,27 +54,12 @@ const COURSE_CONFIG: Record<string, {
 };
 
 const MENTION_LABELS: Record<string, string> = {
-  "Excellence": "🏅 Mention Excellence",
-  "Très Bien": "🏅 Mention Très Bien",
-  "Bien": "Mention Bien",
-  "Passable": "Mention Passable",
+  "Excellence": "MENTION EXCELLENCE",
+  "Très Bien":  "MENTION TRÈS BIEN",
+  "Bien":       "MENTION BIEN",
+  "Passable":   "MENTION PASSABLE",
 };
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-function hexToRgb(r: number, g: number, b: number) {
-  return { r, g, b };
-}
-
-function drawRoundedRect(
-  doc: jsPDF,
-  x: number, y: number,
-  w: number, h: number,
-  radius: number
-) {
-  doc.roundedRect(x, y, w, h, radius, radius, "F");
-}
-
-// ─── GÉNÉRATEUR PRINCIPAL ────────────────────────────────────────────────────
 export async function generateCertificatePDF(cert: CertificateData): Promise<void> {
   const doc = new jsPDF({
     orientation: "landscape",
@@ -88,301 +67,339 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
     format: "a4",
   });
 
-  const W = 297; // largeur A4 paysage
-  const H = 210; // hauteur A4 paysage
+  const W = 297;
+  const H = 210;
+  const cfg = COURSE_CONFIG[cert.courseTitle] ?? COURSE_CONFIG["Excel pour l'Analyse de Données"];
+  const [ar, ag, ab] = cfg.accent;
 
-  const course = COURSE_CONFIG[cert.courseTitle] || COURSE_CONFIG["Excel pour l'Analyse de Données"];
-  const [ar, ag, ab] = course.accent;
-  const [alr, alg, alb] = course.accentLight;
-
-  // ── 1. FOND NOIR ────────────────────────────────────────────────────────
-  doc.setFillColor(7, 7, 14);
+  // ────────────────────────────────────────────────────────────────────────────
+  // 1. FOND BLANC TOTAL
+  // ────────────────────────────────────────────────────────────────────────────
+  doc.setFillColor(255, 255, 255);
   doc.rect(0, 0, W, H, "F");
 
-  // ── 2. GRILLE SUBTILE ───────────────────────────────────────────────────
-  doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(0.05);
-  doc.setGState(doc.GState({ opacity: 0.04 }));
-  for (let x = 0; x <= W; x += 12) doc.line(x, 0, x, H);
-  for (let y = 0; y <= H; y += 12) doc.line(0, y, W, y);
-  doc.setGState(doc.GState({ opacity: 1 }));
+  // ────────────────────────────────────────────────────────────────────────────
+  // 2. BORDURE EXTÉRIEURE ÉLÉGANTE
+  // ────────────────────────────────────────────────────────────────────────────
+  // Bordure principale
+  doc.setDrawColor(ar, ag, ab);
+  doc.setLineWidth(1.5);
+  doc.rect(8, 8, W - 16, H - 16);
 
-  // ── 3. BORDURE ACCENT ───────────────────────────────────────────────────
-  // Bordure extérieure fine
+  // Bordure intérieure fine
   doc.setDrawColor(ar, ag, ab);
   doc.setLineWidth(0.3);
-  doc.setGState(doc.GState({ opacity: 0.4 }));
-  doc.rect(6, 6, W - 12, H - 12);
+  doc.setGState(doc.GState({ opacity: 0.3 }));
+  doc.rect(11, 11, W - 22, H - 22);
   doc.setGState(doc.GState({ opacity: 1 }));
 
-  // Bordure intérieure encore plus fine
-  doc.setDrawColor(ar, ag, ab);
-  doc.setLineWidth(0.1);
-  doc.setGState(doc.GState({ opacity: 0.15 }));
-  doc.rect(8, 8, W - 16, H - 16);
-  doc.setGState(doc.GState({ opacity: 1 }));
-
-  // ── 4. BANDE LATÉRALE GAUCHE ────────────────────────────────────────────
+  // ────────────────────────────────────────────────────────────────────────────
+  // 3. BANDE HEADER (couleur accent)
+  // ────────────────────────────────────────────────────────────────────────────
   doc.setFillColor(ar, ag, ab);
-  doc.setGState(doc.GState({ opacity: 0.06 }));
-  doc.rect(0, 0, 22, H, "F");
-  doc.setGState(doc.GState({ opacity: 1 }));
+  doc.rect(8, 8, W - 16, 24, "F");
 
-  // Ligne accent gauche
-  doc.setFillColor(ar, ag, ab);
-  doc.rect(0, 0, 3, H, "F");
-
-  // ── 5. EN-TÊTE ──────────────────────────────────────────────────────────
-  // Logo / nom organisme
+  // Nom organisme (blanc sur fond coloré)
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(7);
-  doc.setTextColor(ar, ag, ab);
-  doc.text("EVALIS CORP", 30, 20);
+  doc.setFontSize(11);
+  doc.setTextColor(255, 255, 255);
+  doc.text("EVALIS CORP", 18, 22);
 
-  // Séparateur
+  // Séparateur vertical header
   doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(0.1);
-  doc.setGState(doc.GState({ opacity: 0.08 }));
-  doc.line(30, 23, W - 14, 23);
+  doc.setLineWidth(0.4);
+  doc.setGState(doc.GState({ opacity: 0.4 }));
+  doc.line(70, 14, 70, 28);
   doc.setGState(doc.GState({ opacity: 1 }));
 
-  // Label de formation (haut droite)
+  // Sous-titre header
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(6);
-  doc.setTextColor(ar, ag, ab);
-  doc.text(course.label, W - 14, 20, { align: "right" });
-
-  // ── 6. WATERMARK "VERIFIED" ─────────────────────────────────────────────
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(72);
+  doc.setFontSize(7.5);
   doc.setTextColor(255, 255, 255);
-  doc.setGState(doc.GState({ opacity: 0.022 }));
-  doc.text("VERIFIED", W / 2, H / 2 + 18, { align: "center" });
+  doc.setGState(doc.GState({ opacity: 0.85 }));
+  doc.text("Formation Professionnelle Certifiante", 75, 22);
   doc.setGState(doc.GState({ opacity: 1 }));
 
-  // ── 7. BADGE "CERTIFICAT AUTHENTIFIÉ" ───────────────────────────────────
-  doc.setFillColor(ar, ag, ab);
-  doc.setGState(doc.GState({ opacity: 0.12 }));
-  drawRoundedRect(doc, W / 2 - 42, 28, 84, 8, 4);
-  doc.setGState(doc.GState({ opacity: 1 }));
-
+  // Formation shortname (droite du header)
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(6.5);
-  doc.setTextColor(ar, ag, ab);
-  doc.text("● CERTIFICAT AUTHENTIFIÉ ●", W / 2, 33.5, { align: "center" });
+  doc.setFontSize(8);
+  doc.setTextColor(255, 255, 255);
+  doc.text(cfg.shortName, W - 18, 22, { align: "right" });
 
-  // ── 8. TEXTE INTRO ──────────────────────────────────────────────────────
+  // ────────────────────────────────────────────────────────────────────────────
+  // 4. ZONE CONTENU PRINCIPALE
+  // ────────────────────────────────────────────────────────────────────────────
+  // Séparation visuelle : colonne gauche (190mm) | colonne droite (75mm)
+  const divX = 200;
+
+  // Ligne de séparation verticale entre les deux colonnes
+  doc.setDrawColor(230, 230, 230);
+  doc.setLineWidth(0.3);
+  doc.line(divX, 38, divX, H - 22);
+
+  // ── COLONNE GAUCHE ──────────────────────────────────────────────────────────
+  let y = 46;
+  const lx = 18;
+
+  // Label discret
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
+  doc.setFontSize(7.5);
   doc.setTextColor(160, 160, 160);
-  doc.text("Ce document officiel atteste que l'étudiant(e)", W / 2, 46, { align: "center" });
+  doc.text("CE DOCUMENT OFFICIEL ATTESTE QUE", lx, y);
+  y += 9;
 
-  // ── 9. NOM DE L'ÉTUDIANT ────────────────────────────────────────────────
+  // NOM ÉTUDIANT
   doc.setFont("times", "bold");
-  doc.setFontSize(36);
-  doc.setTextColor(255, 255, 255);
-  const nameUpper = cert.studentName.toUpperCase();
-  doc.text(nameUpper, W / 2, 64, { align: "center" });
+  doc.setFontSize(34);
+  doc.setTextColor(15, 15, 15);
+  // Réduire si nom trop long
+  const nameStr = cert.studentName.toUpperCase();
+  const maxW = divX - lx - 10;
+  let nameFontSize = 34;
+  while (doc.getTextWidth(nameStr) > maxW && nameFontSize > 18) {
+    nameFontSize -= 1;
+    doc.setFontSize(nameFontSize);
+  }
+  doc.text(nameStr, lx, y);
 
   // Ligne décorative sous le nom
-  const nameWidth = Math.min(doc.getTextWidth(nameUpper), 160);
+  const nw = Math.min(doc.getTextWidth(nameStr), maxW);
   doc.setDrawColor(ar, ag, ab);
-  doc.setLineWidth(0.4);
-  doc.setGState(doc.GState({ opacity: 0.5 }));
-  doc.line(W / 2 - nameWidth / 2, 67, W / 2 + nameWidth / 2, 67);
-  doc.setGState(doc.GState({ opacity: 1 }));
+  doc.setLineWidth(1.8);
+  doc.line(lx, y + 3, lx + nw, y + 3);
+  y += 12;
 
-  // ── 10. TEXTE "A COMPLÉTÉ" ──────────────────────────────────────────────
+  // Texte "a complété avec succès"
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
-  doc.setTextColor(130, 130, 130);
-  doc.text("a complété avec succès le programme de formation", W / 2, 75, { align: "center" });
+  doc.setTextColor(100, 100, 100);
+  doc.text("a complété avec succès le programme de formation", lx, y);
+  y += 9;
 
-  // ── 11. TITRE DE LA FORMATION ───────────────────────────────────────────
+  // TITRE FORMATION — fond coloré
   doc.setFillColor(ar, ag, ab);
-  doc.setGState(doc.GState({ opacity: 0.1 }));
-  drawRoundedRect(doc, W / 2 - 65, 79, 130, 11, 5);
+  doc.setGState(doc.GState({ opacity: 0.07 }));
+  doc.roundedRect(lx - 2, y - 5, divX - lx - 14, 12, 2, 2, "F");
   doc.setGState(doc.GState({ opacity: 1 }));
 
   doc.setDrawColor(ar, ag, ab);
-  doc.setLineWidth(0.3);
-  doc.setGState(doc.GState({ opacity: 0.4 }));
-  doc.roundedRect(W / 2 - 65, 79, 130, 11, 5, 5);
-  doc.setGState(doc.GState({ opacity: 1 }));
+  doc.setLineWidth(2);
+  doc.line(lx - 2, y - 5, lx - 2, y + 7);
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   doc.setTextColor(ar, ag, ab);
-  doc.text(cert.courseTitle, W / 2, 86.5, { align: "center" });
+  doc.text(cert.courseTitle, lx + 4, y + 3);
+  y += 14;
 
-  // ── 12. META (DATE / DURÉE / NIVEAU) ────────────────────────────────────
-  const metas = [
-    `Délivré le : ${cert.issueDate}`,
-    cert.duration ? cert.duration : null,
-    cert.level ? `Niveau : ${cert.level}` : null,
-  ].filter(Boolean) as string[];
+  // MÉTA : date / durée / niveau
+  const metas: string[] = [];
+  if (cert.issueDate) metas.push(`📅  ${cert.issueDate}`);
+  if (cert.duration)  metas.push(`⏱  ${cert.duration}`);
+  if (cert.level)     metas.push(`◆  Niveau ${cert.level}`);
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(7);
-  doc.setTextColor(80, 80, 80);
-  doc.text(metas.join("   |   "), W / 2, 96, { align: "center" });
+  doc.setFontSize(8);
+  doc.setTextColor(100, 100, 100);
+  doc.text(metas.join("      "), lx, y);
+  y += 9;
 
-  // ── 13. MENTION ─────────────────────────────────────────────────────────
+  // MENTION
   if (cert.mention && MENTION_LABELS[cert.mention]) {
     doc.setFillColor(ar, ag, ab);
-    doc.setGState(doc.GState({ opacity: 0.08 }));
-    drawRoundedRect(doc, W / 2 - 30, 100, 60, 8, 4);
+    doc.setGState(doc.GState({ opacity: 0.1 }));
+    doc.roundedRect(lx - 2, y - 4, 56, 8, 4, 4, "F");
     doc.setGState(doc.GState({ opacity: 1 }));
 
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(7);
+    doc.setFontSize(7.5);
     doc.setTextColor(ar, ag, ab);
-    doc.text(MENTION_LABELS[cert.mention], W / 2, 105.5, { align: "center" });
+    doc.text(`🏅  ${MENTION_LABELS[cert.mention]}`, lx + 2, y + 1.5);
+    y += 12;
+  } else {
+    y += 4;
   }
 
-  // ── 14. LIGNE SÉPARATRICE ───────────────────────────────────────────────
-  const sepY = cert.mention ? 113 : 105;
-  doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(0.1);
-  doc.setGState(doc.GState({ opacity: 0.06 }));
-  doc.line(30, sepY, W - 14, sepY);
-  doc.setGState(doc.GState({ opacity: 1 }));
+  // Séparateur
+  doc.setDrawColor(235, 235, 235);
+  doc.setLineWidth(0.4);
+  doc.line(lx, y, divX - 14, y);
+  y += 8;
 
-  // ── 15. SECTION COMPÉTENCES (colonne gauche) ────────────────────────────
-  const colStartY = sepY + 8;
-  const colLeftX = 30;
-
+  // COMPÉTENCES VALIDÉES
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(6.5);
+  doc.setFontSize(7);
   doc.setTextColor(ar, ag, ab);
-  doc.text("COMPÉTENCES VALIDÉES", colLeftX, colStartY);
+  doc.text("COMPÉTENCES VALIDÉES", lx, y);
+  y += 6;
 
-  course.skills.forEach((skill, i) => {
-    const sy = colStartY + 7 + i * 7;
+  // Disposition en 2 colonnes
+  const colW = (divX - lx - 14) / 2;
+  const half = Math.ceil(cfg.skills.length / 2);
+
+  cfg.skills.forEach((skill, i) => {
+    const col = i < half ? 0 : 1;
+    const row = i < half ? i : i - half;
+    const sx = lx + col * colW;
+    const sy = y + row * 6.5;
+
     // Puce
     doc.setFillColor(ar, ag, ab);
-    doc.circle(colLeftX + 1, sy - 1.2, 0.8, "F");
-    // Texte
+    doc.circle(sx + 1.2, sy - 1.5, 1, "F");
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7.5);
-    doc.setTextColor(200, 200, 200);
-    doc.text(skill, colLeftX + 5, sy);
+    doc.setTextColor(50, 50, 50);
+    doc.text(skill, sx + 5, sy - 0.5);
   });
 
-  // ── 16. SECTION PROJET (colonne centre) ─────────────────────────────────
-  if (cert.projectDescription) {
-    const projX = 115;
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(6.5);
-    doc.setTextColor(ar, ag, ab);
-    doc.text("PROJET FINAL", projX, colStartY);
+  // ── COLONNE DROITE ──────────────────────────────────────────────────────────
+  const rx = divX + 8;
+  let ry = 42;
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7.5);
-    doc.setTextColor(180, 180, 180);
-    const lines = doc.splitTextToSize(cert.projectDescription, 65);
-    lines.slice(0, 6).forEach((line: string, i: number) => {
-      doc.text(line, projX, colStartY + 7 + i * 6);
-    });
+  // ── SIGNATURE ─────────────────────────────────────────────────────────────
+  // Zone signature
+  doc.setFillColor(250, 250, 250);
+  doc.roundedRect(rx, ry, 72, 38, 2, 2, "F");
 
-    if (cert.projectUrl) {
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(6.5);
-      doc.setTextColor(ar, ag, ab);
-      doc.text("↗ Voir sur GitHub", projX, colStartY + 52);
-    }
-  }
-
-  // ── 17. QR CODE (colonne droite) ────────────────────────────────────────
-  const verifyUrl = `https://medoune-business-analyst.vercel.app/verify/${cert.id}`;
-  const qrX = 220;
-  const qrY = colStartY - 2;
-  const qrSize = 35;
-
-  try {
-    const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
-      width: 200,
-      margin: 1,
-      color: {
-        dark: `#${ar.toString(16).padStart(2, "0")}${ag.toString(16).padStart(2, "0")}${ab.toString(16).padStart(2, "0")}`,
-        light: "#07070e",
-      },
-    });
-    // Fond QR
-    doc.setFillColor(alr, alg, alb);
-    doc.setGState(doc.GState({ opacity: 0.3 }));
-    drawRoundedRect(doc, qrX - 3, qrY - 3, qrSize + 6, qrSize + 6, 4);
-    doc.setGState(doc.GState({ opacity: 1 }));
-
-    doc.addImage(qrDataUrl, "PNG", qrX, qrY, qrSize, qrSize);
-  } catch (e) {
-    console.error("QR Code generation failed:", e);
-  }
-
-  // Label QR
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(6);
-  doc.setTextColor(80, 80, 80);
-  doc.text("Scanner pour vérifier", qrX + qrSize / 2, qrY + qrSize + 5, { align: "center" });
-
-  // ── 18. SIGNATURE ───────────────────────────────────────────────────────
-  const sigX = 195;
-  const sigY = colStartY;
-
-  // Essai de chargement de la signature
+  // Charger signature si disponible
   try {
     const sigImg = new Image();
+    sigImg.crossOrigin = "anonymous";
     sigImg.src = "/signature.png";
-    await new Promise((resolve) => {
-      sigImg.onload = resolve;
-      sigImg.onerror = resolve;
-      setTimeout(resolve, 1000);
+    await new Promise<void>((resolve) => {
+      sigImg.onload = () => resolve();
+      sigImg.onerror = () => resolve();
+      setTimeout(resolve, 1500);
     });
     if (sigImg.complete && sigImg.naturalWidth > 0) {
-      doc.addImage(sigImg, "PNG", sigX, sigY, 22, 12);
+      doc.addImage(sigImg, "PNG", rx + 16, ry + 4, 40, 18);
+    } else {
+      // Placeholder signature si pas de fichier
+      doc.setFont("times", "italic");
+      doc.setFontSize(18);
+      doc.setTextColor(50, 50, 50);
+      doc.setGState(doc.GState({ opacity: 0.3 }));
+      doc.text("Medoune C.", rx + 36, ry + 18, { align: "center" });
+      doc.setGState(doc.GState({ opacity: 1 }));
     }
   } catch (_) {}
 
   // Ligne signature
   doc.setDrawColor(ar, ag, ab);
-  doc.setLineWidth(0.3);
-  doc.setGState(doc.GState({ opacity: 0.4 }));
-  doc.line(sigX - 2, sigY + 14, sigX + 24, sigY + 14);
-  doc.setGState(doc.GState({ opacity: 1 }));
+  doc.setLineWidth(0.6);
+  doc.line(rx + 8, ry + 26, rx + 64, ry + 26);
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(7);
-  doc.setTextColor(220, 220, 220);
-  doc.text("Medoune Camara", sigX + 11, sigY + 19, { align: "center" });
+  doc.setFontSize(8);
+  doc.setTextColor(20, 20, 20);
+  doc.text("Medoune Camara", rx + 36, ry + 31, { align: "center" });
 
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.5);
+  doc.setTextColor(120, 120, 120);
+  doc.text("Economist & Business Analyst", rx + 36, ry + 36, { align: "center" });
+
+  ry += 46;
+
+  // ── QR CODE ────────────────────────────────────────────────────────────────
+  const verifyUrl = `https://medoune-business-analyst.vercel.app/verify/${cert.id}`;
+  const qrSize = 42;
+
+  try {
+    const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
+      width: 400,
+      margin: 2,
+      color: { dark: "#000000", light: "#ffffff" },
+    });
+
+    // Fond blanc propre avec bordure fine
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(210, 210, 210);
+    doc.setLineWidth(0.4);
+    doc.roundedRect(rx + 15, ry, qrSize + 4, qrSize + 4, 2, 2, "FD");
+
+    doc.addImage(qrDataUrl, "PNG", rx + 17, ry + 2, qrSize, qrSize);
+  } catch (e) {
+    console.error("QR error:", e);
+  }
+
+  ry += qrSize + 8;
+
+  // Label scanner
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.5);
+  doc.setTextColor(130, 130, 130);
+  doc.text("Scannez pour vérifier l'authenticité", rx + 36, ry, { align: "center" });
+
+  ry += 6;
+
+  // Fondateur
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(6.5);
+  doc.setTextColor(ar, ag, ab);
+  doc.text("Fondateur — Evalis Corp", rx + 36, ry, { align: "center" });
+
+  // Projet final (si dispo et place)
+  if (cert.projectDescription) {
+    ry += 8;
+    if (ry < H - 28) {
+      doc.setDrawColor(235, 235, 235);
+      doc.setLineWidth(0.3);
+      doc.line(rx, ry, rx + 72, ry);
+      ry += 5;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(6.5);
+      doc.setTextColor(ar, ag, ab);
+      doc.text("PROJET FINAL", rx, ry);
+      ry += 5;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7);
+      doc.setTextColor(80, 80, 80);
+      const plines = doc.splitTextToSize(cert.projectDescription, 72);
+      plines.slice(0, 3).forEach((line: string, i: number) => {
+        doc.text(line, rx, ry + i * 5);
+      });
+    }
+  }
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // 5. FOOTER
+  // ────────────────────────────────────────────────────────────────────────────
+  doc.setFillColor(248, 249, 250);
+  doc.rect(8, H - 22, W - 16, 14, "F");
+
+  doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.3);
+  doc.line(18, H - 22, W - 18, H - 22);
+
+  // ID (gauche)
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
-  doc.setTextColor(80, 80, 80);
-  doc.text("Economist & Business Analyst", sigX + 11, sigY + 24, { align: "center" });
-  doc.text("Fondateur, Evalis Corp", sigX + 11, sigY + 29, { align: "center" });
+  doc.setTextColor(150, 150, 150);
+  doc.text(`ID Unique : ${cert.id}`, 18, H - 13);
 
-  // ── 19. PIED DE PAGE ────────────────────────────────────────────────────
-  doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(0.1);
-  doc.setGState(doc.GState({ opacity: 0.06 }));
-  doc.line(30, H - 16, W - 14, H - 16);
-  doc.setGState(doc.GState({ opacity: 1 }));
-
-  // ID unique
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(5.5);
-  doc.setTextColor(50, 50, 50);
-  doc.text(`ID : ${cert.id}`, 30, H - 11);
-
-  // URL de vérification
+  // URL vérification (centre)
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(6.5);
   doc.setTextColor(ar, ag, ab);
-  doc.text(`Vérifier : medoune-business-analyst.vercel.app/verify/${cert.id}`, W / 2, H - 11, { align: "center" });
+  doc.text(
+    `Vérification : medoune-business-analyst.vercel.app/verify/${cert.id}`,
+    W / 2, H - 13, { align: "center" }
+  );
 
-  // Année
-  doc.setTextColor(50, 50, 50);
-  doc.text("© 2026 Evalis Corp — Yamoussoukro, Côte d'Ivoire", W - 14, H - 11, { align: "right" });
+  // Copyright (droite)
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6);
+  doc.setTextColor(150, 150, 150);
+  doc.text("© 2026 Evalis Corp — Yamoussoukro, CI", W - 18, H - 13, { align: "right" });
 
-  // ── 20. SAUVEGARDE ──────────────────────────────────────────────────────
-  const filename = `certificat_${cert.studentName.replace(/\s+/g, "_").toLowerCase()}_${cert.courseTitle.split(" ")[0].toLowerCase()}.pdf`;
-  doc.save(filename);
+  // ────────────────────────────────────────────────────────────────────────────
+  // 6. SAUVEGARDE
+  // ────────────────────────────────────────────────────────────────────────────
+  const safeName = cert.studentName.replace(/\s+/g, "_").toLowerCase();
+  const safeCourse = cfg.shortName.replace(/\s+/g, "_").toLowerCase();
+  doc.save(`certificat_${safeName}_${safeCourse}.pdf`);
 }
