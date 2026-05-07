@@ -13,24 +13,25 @@ interface CertificateData {
   projectUrl?: string;
 }
 
-const COURSE_CONFIG: Record<string, {
-  accent: [number, number, number];
-  skills: string[];
-  shortName: string;
-}> = {
-  "Excel pour l'Analyse de Donnees": {
-    accent: [16, 185, 129],
+// On utilise des patterns pour matcher les titres Firebase avec ou sans accents
+const COURSE_CONFIG_LIST = [
+  {
+    // Matches: "Excel pour l'Analyse de Données" ou "Excel pour l'Analyse de Donnees"
+    pattern: /excel/i,
+    accent: [16, 185, 129] as [number, number, number],
     shortName: "EXCEL PRO",
     skills: [
       "Tableaux croises dynamiques",
       "Dashboards interactifs",
       "Formules avancees (INDEX/EQUIV, OFFSET)",
-      "Power Query & transformation de donnees",
+      "Transformation de donnees",
       "Visualisation & nettoyage de fichiers",
     ],
   },
-  "Maitrise de SQL pour le Business": {
-    accent: [59, 130, 246],
+  {
+    // Matches: "Maîtrise de SQL pour le Business" ou "Maitrise de SQL..."
+    pattern: /sql/i,
+    accent: [59, 130, 246] as [number, number, number],
     shortName: "SQL MASTER",
     skills: [
       "Requetes complexes (JOIN, CTE, Subqueries)",
@@ -40,8 +41,10 @@ const COURSE_CONFIG: Record<string, {
       "Extraction & transformation de donnees",
     ],
   },
-  "Data Science & Strategie avec R": {
-    accent: [139, 92, 246],
+  {
+    // Matches: "Data Science & Stratégie avec R" ou "Data Science & Strategie avec R"
+    pattern: /\br\b|rstudio|strateg/i,
+    accent: [139, 92, 246] as [number, number, number],
     shortName: "R STRATEGY",
     skills: [
       "Modelisation econometrique",
@@ -51,7 +54,12 @@ const COURSE_CONFIG: Record<string, {
       "Segmentation RFM & clustering",
     ],
   },
-};
+];
+
+function getCourseConfig(courseTitle: string) {
+  const match = COURSE_CONFIG_LIST.find(c => c.pattern.test(courseTitle));
+  return match ?? COURSE_CONFIG_LIST[0]; // fallback Excel
+}
 
 const MENTION_LABELS: Record<string, string> = {
   "Excellence": "MENTION EXCELLENCE",
@@ -69,7 +77,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
 
   const W = 297;
   const H = 210;
-  const cfg = COURSE_CONFIG[cert.courseTitle] ?? COURSE_CONFIG["Excel pour l'Analyse de Donnees"];
+  const cfg = getCourseConfig(cert.courseTitle);
   const [ar, ag, ab] = cfg.accent;
 
   // ────────────────────────────────────────────────────────────────────────────
