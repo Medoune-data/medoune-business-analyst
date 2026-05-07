@@ -18,36 +18,36 @@ const COURSE_CONFIG: Record<string, {
   skills: string[];
   shortName: string;
 }> = {
-  "Excel pour l'Analyse de Données": {
+  "Excel pour l'Analyse de Donnees": {
     accent: [16, 185, 129],
     shortName: "EXCEL PRO",
     skills: [
-      "Tableaux croisés dynamiques",
+      "Tableaux croises dynamiques",
       "Dashboards interactifs",
-      "Formules avancées (INDEX/EQUIV, OFFSET)",
-      "Power Query & transformation de données",
+      "Formules avancees (INDEX/EQUIV, OFFSET)",
+      "Transformation de donnees",
       "Visualisation & nettoyage de fichiers",
     ],
   },
-  "Maîtrise de SQL pour le Business": {
+  "Maitrise de SQL pour le Business": {
     accent: [59, 130, 246],
     shortName: "SQL MASTER",
     skills: [
-      "Requêtes complexes (JOIN, CTE, Subqueries)",
+      "Requetes complexes (JOIN, CTE, Subqueries)",
       "Window Functions (RANK, LAG, ROW_NUMBER)",
-      "Optimisation de requêtes & index",
-      "Gestion de bases de données relationnelles",
-      "Extraction & transformation de données",
+      "Optimisation de requetes & index",
+      "Gestion de bases de donnees relationnelles",
+      "Extraction & transformation de donnees",
     ],
   },
-  "Data Science & Stratégie avec R": {
+  "Data Science & Strategie avec R": {
     accent: [139, 92, 246],
     shortName: "R STRATEGY",
     skills: [
-      "Modélisation économétrique",
-      "Analyse de régression (OLS, Logit)",
-      "Visualisation avancée (ggplot2)",
-      "Nettoyage de données (dplyr / tidyr)",
+      "Modelisation econometrique",
+      "Analyse de regression (OLS, Logit)",
+      "Visualisation avancee (ggplot2)",
+      "Nettoyage de donnees (dplyr / tidyr)",
       "Segmentation RFM & clustering",
     ],
   },
@@ -55,7 +55,8 @@ const COURSE_CONFIG: Record<string, {
 
 const MENTION_LABELS: Record<string, string> = {
   "Excellence": "MENTION EXCELLENCE",
-  "Très Bien":  "MENTION TRÈS BIEN",
+  "Tres Bien":  "MENTION TRES BIEN",
+  "Tres Bien":  "MENTION TRES BIEN",
   "Bien":       "MENTION BIEN",
   "Passable":   "MENTION PASSABLE",
 };
@@ -69,7 +70,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
 
   const W = 297;
   const H = 210;
-  const cfg = COURSE_CONFIG[cert.courseTitle] ?? COURSE_CONFIG["Excel pour l'Analyse de Données"];
+  const cfg = COURSE_CONFIG[cert.courseTitle] ?? COURSE_CONFIG["Excel pour l'Analyse de Donnees"];
   const [ar, ag, ab] = cfg.accent;
 
   // ────────────────────────────────────────────────────────────────────────────
@@ -79,14 +80,14 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.rect(0, 0, W, H, "F");
 
   // ────────────────────────────────────────────────────────────────────────────
-  // 2. BORDURE EXTÉRIEURE ÉLÉGANTE
+  // 2. BORDURE EXTERIEURE ELEGANTE
   // ────────────────────────────────────────────────────────────────────────────
   // Bordure principale
   doc.setDrawColor(ar, ag, ab);
   doc.setLineWidth(1.5);
   doc.rect(8, 8, W - 16, H - 16);
 
-  // Bordure intérieure fine
+  // Bordure interieure fine
   doc.setDrawColor(ar, ag, ab);
   doc.setLineWidth(0.3);
   doc.setGState(doc.GState({ opacity: 0.3 }));
@@ -99,13 +100,13 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFillColor(ar, ag, ab);
   doc.rect(8, 8, W - 16, 24, "F");
 
-  // Nom organisme (blanc sur fond coloré)
+  // Nom organisme (blanc sur fond colore)
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
   doc.setTextColor(255, 255, 255);
   doc.text("EVALIS CORP", 18, 22);
 
-  // Séparateur vertical header
+  // Separateur vertical header
   doc.setDrawColor(255, 255, 255);
   doc.setLineWidth(0.4);
   doc.setGState(doc.GState({ opacity: 0.4 }));
@@ -129,10 +130,10 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   // ────────────────────────────────────────────────────────────────────────────
   // 4. ZONE CONTENU PRINCIPALE
   // ────────────────────────────────────────────────────────────────────────────
-  // Séparation visuelle : colonne gauche (190mm) | colonne droite (75mm)
+  // Separation visuelle : colonne gauche (190mm) | colonne droite (75mm)
   const divX = 200;
 
-  // Ligne de séparation verticale entre les deux colonnes
+  // Ligne de separation verticale entre les deux colonnes
   doc.setDrawColor(230, 230, 230);
   doc.setLineWidth(0.3);
   doc.line(divX, 38, divX, H - 22);
@@ -148,11 +149,11 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.text("CE DOCUMENT OFFICIEL ATTESTE QUE", lx, y);
   y += 9;
 
-  // NOM ÉTUDIANT
+  // NOM ETUDIANT
   doc.setFont("times", "bold");
   doc.setFontSize(34);
   doc.setTextColor(15, 15, 15);
-  // Réduire si nom trop long
+  // Reduire si nom trop long
   const nameStr = cert.studentName.toUpperCase();
   const maxW = divX - lx - 10;
   let nameFontSize = 34;
@@ -162,21 +163,21 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   }
   doc.text(nameStr, lx, y);
 
-  // Ligne décorative sous le nom
+  // Ligne decorative sous le nom
   const nw = Math.min(doc.getTextWidth(nameStr), maxW);
   doc.setDrawColor(ar, ag, ab);
   doc.setLineWidth(1.8);
   doc.line(lx, y + 3, lx + nw, y + 3);
   y += 12;
 
-  // Texte "a complété avec succès"
+  // Texte "a complete avec succes"
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
   doc.setTextColor(100, 100, 100);
-  doc.text("a complété avec succès le programme de formation", lx, y);
+  doc.text("a complete avec succes le programme de formation", lx, y);
   y += 9;
 
-  // TITRE FORMATION — fond coloré
+  // TITRE FORMATION - fond colore
   doc.setFillColor(ar, ag, ab);
   doc.setGState(doc.GState({ opacity: 0.07 }));
   doc.roundedRect(lx - 2, y - 5, divX - lx - 14, 12, 2, 2, "F");
@@ -192,45 +193,71 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.text(cert.courseTitle, lx + 4, y + 3);
   y += 14;
 
-  // MÉTA : date / durée / niveau
-  const metas: string[] = [];
-  if (cert.issueDate) metas.push(`📅  ${cert.issueDate}`);
-  if (cert.duration)  metas.push(`⏱  ${cert.duration}`);
-  if (cert.level)     metas.push(`◆  Niveau ${cert.level}`);
+  // META : date / duree / niveau - SANS EMOJIS
+  const metaParts: { label: string; value: string }[] = [];
+  if (cert.issueDate) metaParts.push({ label: "Date", value: cert.issueDate });
+  if (cert.duration)  metaParts.push({ label: "Duree", value: cert.duration });
+  if (cert.level)     metaParts.push({ label: "Niveau", value: cert.level });
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(100, 100, 100);
-  doc.text(metas.join("      "), lx, y);
+  // Affichage meta propre : label gris + valeur noire
+  let metaX = lx;
+  metaParts.forEach((m, i) => {
+    // Label
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.setTextColor(150, 150, 150);
+    doc.text(m.label + " :", metaX, y);
+    const labelW = doc.getTextWidth(m.label + " :");
+
+    // Valeur
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.setTextColor(40, 40, 40);
+    doc.text(m.value, metaX + labelW + 1.5, y);
+    const valW = doc.getTextWidth(m.value);
+
+    metaX += labelW + valW + 10;
+
+    // Separateur entre les metas (sauf dernier)
+    if (i < metaParts.length - 1) {
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.3);
+      doc.line(metaX - 5, y - 3, metaX - 5, y + 1);
+    }
+  });
   y += 9;
 
-  // MENTION
+  // MENTION - SANS EMOJI
   if (cert.mention && MENTION_LABELS[cert.mention]) {
     doc.setFillColor(ar, ag, ab);
     doc.setGState(doc.GState({ opacity: 0.1 }));
-    doc.roundedRect(lx - 2, y - 4, 56, 8, 4, 4, "F");
+    doc.roundedRect(lx - 2, y - 4, 58, 8, 4, 4, "F");
     doc.setGState(doc.GState({ opacity: 1 }));
+
+    // Petit carre decoratif a la place de l'emoji
+    doc.setFillColor(ar, ag, ab);
+    doc.rect(lx + 1, y - 2.5, 3, 3, "F");
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(7.5);
     doc.setTextColor(ar, ag, ab);
-    doc.text(`🏅  ${MENTION_LABELS[cert.mention]}`, lx + 2, y + 1.5);
+    doc.text(MENTION_LABELS[cert.mention], lx + 7, y + 1.5);
     y += 12;
   } else {
     y += 4;
   }
 
-  // Séparateur
+  // Separateur
   doc.setDrawColor(235, 235, 235);
   doc.setLineWidth(0.4);
   doc.line(lx, y, divX - 14, y);
   y += 8;
 
-  // COMPÉTENCES VALIDÉES
+  // COMPETENCES VALIDEES
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7);
   doc.setTextColor(ar, ag, ab);
-  doc.text("COMPÉTENCES VALIDÉES", lx, y);
+  doc.text("COMPETENCES VALIDEES", lx, y);
   y += 6;
 
   // Disposition en 2 colonnes
@@ -330,7 +357,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(130, 130, 130);
-  doc.text("Scannez pour vérifier l'authenticité", rx + 36, ry, { align: "center" });
+  doc.text("Scannez pour verifier l'authenticitee", rx + 36, ry, { align: "center" });
 
   ry += 6;
 
@@ -338,7 +365,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFont("helvetica", "bold");
   doc.setFontSize(6.5);
   doc.setTextColor(ar, ag, ab);
-  doc.text("Fondateur — Evalis Corp", rx + 36, ry, { align: "center" });
+  doc.text("Fondateur - Evalis Corp", rx + 36, ry, { align: "center" });
 
   // Projet final (si dispo et place)
   if (cert.projectDescription) {
@@ -381,12 +408,12 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setTextColor(150, 150, 150);
   doc.text(`ID Unique : ${cert.id}`, 18, H - 13);
 
-  // URL vérification (centre)
+  // URL verification (centre)
   doc.setFont("helvetica", "bold");
   doc.setFontSize(6.5);
   doc.setTextColor(ar, ag, ab);
   doc.text(
-    `Vérification : medoune-business-analyst.vercel.app/verify/${cert.id}`,
+    `Verification : medoune-business-analyst.vercel.app/verify/${cert.id}`,
     W / 2, H - 13, { align: "center" }
   );
 
@@ -394,7 +421,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(150, 150, 150);
-  doc.text("© 2026 Evalis Corp — Yamoussoukro, CI", W - 18, H - 13, { align: "right" });
+  doc.text("(c) 2026 Evalis Corp - Yamoussoukro, CI", W - 18, H - 13, { align: "right" });
 
   // ────────────────────────────────────────────────────────────────────────────
   // 6. SAUVEGARDE
