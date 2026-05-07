@@ -25,7 +25,7 @@ const COURSE_CONFIG: Record<string, {
       "Tableaux croises dynamiques",
       "Dashboards interactifs",
       "Formules avancees (INDEX/EQUIV, OFFSET)",
-      "Transformation de donnees",
+      "Power Query & transformation de donnees",
       "Visualisation & nettoyage de fichiers",
     ],
   },
@@ -55,7 +55,6 @@ const COURSE_CONFIG: Record<string, {
 
 const MENTION_LABELS: Record<string, string> = {
   "Excellence": "MENTION EXCELLENCE",
-  "Tres Bien":  "MENTION TRES BIEN",
   "Tres Bien":  "MENTION TRES BIEN",
   "Bien":       "MENTION BIEN",
   "Passable":   "MENTION PASSABLE",
