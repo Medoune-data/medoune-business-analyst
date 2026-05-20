@@ -30,7 +30,7 @@ const COURSE_CONFIG_LIST = [
       "Tableaux croises dynamiques",
       "Dashboards interactifs",
       "Formules avancees (INDEX/EQUIV, OFFSET)",
-      "Power Query & transformation de donnees",
+      "Transformation de donnees",
       "Visualisation & nettoyage de fichiers",
     ],
   },
@@ -132,9 +132,11 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
     loadImage("/logo-adn.png"),
   ]);
 
-  // Logo Evalis (gauche)
+  // Logo Evalis (gauche) - fond blanc derriere pour masquer le fond coloré du logo
   if (logoEvalis) {
-    doc.addImage(logoEvalis, "PNG", 14, 11, 28, 22);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(13, 10, 30, 20, 2, 2, "F");
+    doc.addImage(logoEvalis, "PNG", 13, 10, 30, 20);
   } else {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
@@ -142,9 +144,11 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
     doc.text("EVALIS CORP", 16, 25);
   }
 
-  // Logo ADN Academy (droite)
+  // Logo ADN Academy (droite) - fond blanc pour que le logo noir soit visible
   if (logoAdn) {
-    doc.addImage(logoAdn, "PNG", W - 44, 11, 28, 22);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(W - 46, 10, 34, 20, 2, 2, "F");
+    doc.addImage(logoAdn, "PNG", W - 46, 10, 34, 20);
   } else {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
@@ -336,34 +340,28 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.line(mx, y, W - mx, y);
   y += 8;
 
-  // PROJET FINAL
-  const projDesc = cert.projectDescription || cfg.description;
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(7.5);
-  doc.setTextColor(ar, ag, ab);
-  doc.text("PROJET FINAL", mx, y);
-  y += 6;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8.5);
-  doc.setTextColor(60, 60, 60);
-  const projLines = doc.splitTextToSize(projDesc, W - mx * 2);
-  projLines.slice(0, 5).forEach((line: string) => {
-    doc.text(line, mx, y);
-    y += 5.5;
-  });
-
-  if (cert.projectUrl) {
-    y += 2;
+  // PROJET FINAL — uniquement si renseigne dans l'admin
+  if (cert.projectDescription && cert.projectDescription.trim().length > 0) {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(7.5);
     doc.setTextColor(ar, ag, ab);
-    doc.text("Voir sur GitHub : " + cert.projectUrl, mx, y);
-    y += 7;
+    doc.text("PROJET FINAL", mx, y);
+    y += 6;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8.5);
+    doc.setTextColor(60, 60, 60);
+    const projLines = doc.splitTextToSize(cert.projectDescription, W - mx * 2);
+    projLines.slice(0, 5).forEach((line: string) => {
+      doc.text(line, mx, y);
+      y += 5.5;
+    });
+    y += 4;
   }
 
   // ─── 5. FOOTER : SIGNATURE + QR ──────────────────────────────────────────
-  const footerY = H - 52;
+  // Footer fixe en bas — ne depend pas de y pour eviter le debordement
+  const footerY = H - 58;
 
   // Ligne séparation footer
   doc.setDrawColor(ar, ag, ab);
@@ -402,7 +400,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.text("Fondateur - ADN Academy", sigX + 25, sigY + 37, { align: "center" });
 
   // QR CODE (droite)
-  const qrSize = 36;
+  const qrSize = 34;
   const qrX = W - mx - qrSize - 4;
   const qrY = footerY + 4;
   const verifyUrl = `https://medoune-business-analyst.vercel.app/verify/${cert.id}`;
@@ -425,26 +423,27 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.text("Scannez pour verifier", qrX + qrSize / 2 + 2, qrY + qrSize + 5, { align: "center" });
 
   // ─── 6. PIED DE PAGE ──────────────────────────────────────────────────────
+  const pageFooterY = H - 14;
   doc.setFillColor(248, 249, 250);
-  doc.rect(8, H - 16, W - 16, 8, "F");
+  doc.rect(8, pageFooterY - 4, W - 16, 10, "F");
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(5.5);
   doc.setTextColor(150, 150, 150);
-  doc.text(`ID : ${cert.id}`, mx, H - 11);
+  doc.text(`ID : ${cert.id}`, mx, pageFooterY);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(6);
   doc.setTextColor(ar, ag, ab);
   doc.text(
     `Verification : medoune-business-analyst.vercel.app/verify/${cert.id}`,
-    W / 2, H - 11, { align: "center" }
+    W / 2, pageFooterY, { align: "center" }
   );
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(5.5);
   doc.setTextColor(150, 150, 150);
-  doc.text("(c) 2026 ADN Academy - Yamoussoukro, CI", W - mx, H - 11, { align: "right" });
+  doc.text("© 2026 ADN Academy - Yamoussoukro, CI", W - mx, pageFooterY, { align: "right" });
 
   // ─── 7. SAUVEGARDE ────────────────────────────────────────────────────────
   const safeName = cert.studentName.replace(/\s+/g, "_").toLowerCase();
