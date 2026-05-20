@@ -22,7 +22,9 @@ const COURSE_CONFIG_LIST = [
     description:
       "Les participants ayant complete ce programme ont developpe des competences pratiques " +
       "pour nettoyer, analyser et visualiser des donnees avec Excel. Ils maitrisent la creation " +
-      "de dashboards interactifs, les formules avancees et l'automatisation des rapports.",
+      "de dashboards interactifs, les formules avancees (INDEX/EQUIV, OFFSET, Power Query) " +
+      "et l'automatisation des rapports pour la prise de decision strategique en entreprise. " +
+      "Ce programme prepare les apprenants a produire des analyses fiables et exploitables.",
     skills: [
       "Tableaux croises dynamiques",
       "Dashboards interactifs",
@@ -38,8 +40,10 @@ const COURSE_CONFIG_LIST = [
     label: "Data Analysis - Database",
     description:
       "Les participants ayant complete ce programme maitrisent l'interrogation et la manipulation " +
-      "de bases de donnees relationnelles. Ils sont competents dans l'ecriture de requetes complexes, " +
-      "l'optimisation des performances et l'extraction de donnees pour l'analyse metier.",
+      "de bases de donnees relationnelles avec SQL. Ils sont competents dans l'ecriture de requetes " +
+      "complexes (JOIN, CTE, Window Functions), l'optimisation des performances et l'extraction " +
+      "de donnees pour l'analyse metier. Ce programme forme des profils capables d'exploiter " +
+      "des bases de donnees reelles dans un contexte professionnel.",
     skills: [
       "Requetes complexes (JOIN, CTE, Subqueries)",
       "Window Functions (RANK, LAG, ROW_NUMBER)",
@@ -54,9 +58,11 @@ const COURSE_CONFIG_LIST = [
     shortName: "R STRATEGY",
     label: "Data Science - Strategy",
     description:
-      "Les participants ayant complete ce programme ont acquis des competences en modelisation " +
-      "econometrique et en analyse predictive avec R. Ils savent preparer, analyser et visualiser " +
-      "des donnees complexes pour orienter la strategie de revenus et la prise de decision.",
+      "Les participants ayant complete ce programme ont acquis des competences avancees en " +
+      "modelisation econometrique et en analyse predictive avec R. Ils savent preparer, analyser " +
+      "et visualiser des donnees complexes (dplyr, ggplot2) pour orienter la strategie de revenus. " +
+      "Ce programme forme des analystes capables de produire des modeles de regression, " +
+      "de segmentation RFM et de prediction pour la prise de decision strategique.",
     skills: [
       "Modelisation econometrique",
       "Analyse de regression (OLS, Logit)",
@@ -177,7 +183,7 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFontSize(7.5);
   doc.setTextColor(160, 160, 160);
   doc.text("CE DOCUMENT OFFICIEL ATTESTE QUE", lx, y);
-  y += 8;
+  y += 12;
 
   // Nom étudiant
   const nameStr = cert.studentName.toUpperCase();
@@ -280,10 +286,10 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   y += 5;
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
+  doc.setFontSize(8.5);
   doc.setTextColor(70, 70, 70);
   const descLines = doc.splitTextToSize(cfg.description, divX - lx - 12);
-  descLines.forEach((line: string) => { doc.text(line, lx, y); y += 5; });
+  descLines.forEach((line: string) => { doc.text(line, lx, y); y += 5.5; });
   y += 3;
 
   // Séparateur
@@ -335,47 +341,13 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
     projLines.slice(0, 4).forEach((line: string) => { doc.text(line, lx, y); y += 5; });
   }
 
-  // ─── 6. COLONNE DROITE : SIGNATURE + QR ──────────────────────────────────
+  // ─── 6. COLONNE DROITE : QR EN HAUT + SIGNATURE EN BAS ──────────────────
   const rx = divX + 8;
-  const rw = W - divX - 14; // largeur dispo ~83mm
+  const rw = W - divX - 14;
   let ry = 40;
 
-  // SIGNATURE
-  doc.setFillColor(250, 250, 250);
-  doc.setDrawColor(240, 240, 240);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(rx, ry, rw, 36, 2, 2, "FD");
-
-  const sigImg = await loadImage("/signature.png");
-  if (sigImg) {
-    doc.addImage(sigImg, "PNG", rx + rw / 2 - 20, ry + 2, 40, 16);
-  } else {
-    doc.setFont("times", "italic");
-    doc.setFontSize(16);
-    doc.setTextColor(50, 50, 50);
-    doc.setGState(doc.GState({ opacity: 0.25 }));
-    doc.text("Medoune C.", rx + rw / 2, ry + 14, { align: "center" });
-    doc.setGState(doc.GState({ opacity: 1 }));
-  }
-
-  doc.setDrawColor(ar, ag, ab);
-  doc.setLineWidth(0.6);
-  doc.line(rx + 8, ry + 22, rx + rw - 8, ry + 22);
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
-  doc.setTextColor(20, 20, 20);
-  doc.text("Medoune Camara", rx + rw / 2, ry + 27, { align: "center" });
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(6.5);
-  doc.setTextColor(110, 110, 110);
-  doc.text("Economist & Business Analyst", rx + rw / 2, ry + 32, { align: "center" });
-  doc.text("Fondateur - ADN Academy", rx + rw / 2, ry + 37, { align: "center" });
-  ry += 44;
-
-  // QR CODE
-  const qrSize = Math.min(rw - 10, 52);
+  // QR CODE en haut de la colonne droite
+  const qrSize = Math.min(rw - 10, 54);
   const qrX = rx + (rw - qrSize) / 2;
   const verifyUrl = `https://medoune-business-analyst.vercel.app/verify/${cert.id}`;
 
@@ -402,7 +374,47 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFont("helvetica", "bold");
   doc.setFontSize(6.5);
   doc.setTextColor(ar, ag, ab);
-  doc.text("ADN Academy — Evalis Corp", rx + rw / 2, ry, { align: "center" });
+  doc.text("ADN Academy - Evalis Corp", rx + rw / 2, ry, { align: "center" });
+  ry += 10;
+
+  // Ligne séparation
+  doc.setDrawColor(235, 235, 235);
+  doc.setLineWidth(0.3);
+  doc.line(rx, ry, rx + rw, ry);
+  ry += 8;
+
+  // SIGNATURE en bas de la colonne droite
+  const sigImg = await loadImage("/signature.png");
+  if (sigImg) {
+    doc.addImage(sigImg, "PNG", rx + rw / 2 - 20, ry, 40, 16);
+    ry += 18;
+  } else {
+    doc.setFont("times", "italic");
+    doc.setFontSize(16);
+    doc.setTextColor(50, 50, 50);
+    doc.setGState(doc.GState({ opacity: 0.25 }));
+    doc.text("Medoune C.", rx + rw / 2, ry + 10, { align: "center" });
+    doc.setGState(doc.GState({ opacity: 1 }));
+    ry += 18;
+  }
+
+  doc.setDrawColor(ar, ag, ab);
+  doc.setLineWidth(0.6);
+  doc.line(rx + 8, ry, rx + rw - 8, ry);
+  ry += 5;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8);
+  doc.setTextColor(20, 20, 20);
+  doc.text("Medoune Camara", rx + rw / 2, ry, { align: "center" });
+  ry += 5;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.5);
+  doc.setTextColor(110, 110, 110);
+  doc.text("Economist & Business Analyst", rx + rw / 2, ry, { align: "center" });
+  ry += 4;
+  doc.text("Fondateur - ADN Academy", rx + rw / 2, ry, { align: "center" });
 
   // ─── 7. PIED DE PAGE ──────────────────────────────────────────────────────
   doc.setFillColor(248, 249, 250);
