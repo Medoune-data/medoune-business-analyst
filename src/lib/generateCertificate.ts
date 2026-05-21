@@ -22,7 +22,7 @@ const COURSE_CONFIG_LIST = [
     description:
       "Les participants ayant complete ce programme ont developpe des competences pratiques " +
       "pour nettoyer, analyser et visualiser des donnees avec Excel. Ils maitrisent la creation " +
-      "de dashboards interactifs, les formules avancees (INDEX/EQUIV, OFFSET, Power Query) " +
+      "de dashboards interactifs, les formules avancees (INDEX/EQUIV, DATEVAL,NOMPROPRE) " +
       "et l'automatisation des rapports pour la prise de decision strategique en entreprise. " +
       "Ce programme prepare les apprenants a produire des analyses fiables et exploitables.",
     skills: [
@@ -341,12 +341,12 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
     projLines.slice(0, 4).forEach((line: string) => { doc.text(line, lx, y); y += 5; });
   }
 
-  // ─── 6. COLONNE DROITE : QR EN HAUT + SIGNATURE EN BAS ──────────────────
+  // ─── 6. COLONNE DROITE : QR EN HAUT + SIGNATURE ANCREE EN BAS ───────────
   const rx = divX + 8;
   const rw = W - divX - 14;
   let ry = 40;
 
-  // QR CODE en haut de la colonne droite
+  // QR CODE en haut
   const qrSize = Math.min(rw - 10, 54);
   const qrX = rx + (rw - qrSize) / 2;
   const verifyUrl = `https://medoune-business-analyst.vercel.app/verify/${cert.id}`;
@@ -375,46 +375,44 @@ export async function generateCertificatePDF(cert: CertificateData): Promise<voi
   doc.setFontSize(6.5);
   doc.setTextColor(ar, ag, ab);
   doc.text("ADN Academy - Evalis Corp", rx + rw / 2, ry, { align: "center" });
-  ry += 10;
 
-  // Ligne séparation
+  // SIGNATURE — ancrée en bas de la colonne droite (juste au-dessus du footer)
+  const sigBottomY = H - 20; // juste au-dessus du footer
+  const sigBlockH = 36;      // hauteur totale du bloc signature
+  const sigStartY = sigBottomY - sigBlockH;
+
+  // Ligne séparation au-dessus de la signature
   doc.setDrawColor(235, 235, 235);
   doc.setLineWidth(0.3);
-  doc.line(rx, ry, rx + rw, ry);
-  ry += 8;
+  doc.line(rx, sigStartY, rx + rw, sigStartY);
 
-  // SIGNATURE en bas de la colonne droite
   const sigImg = await loadImage("/signature.png");
   if (sigImg) {
-    doc.addImage(sigImg, "PNG", rx + rw / 2 - 20, ry, 40, 16);
-    ry += 18;
+    doc.addImage(sigImg, "PNG", rx + rw / 2 - 20, sigStartY + 3, 40, 16);
   } else {
     doc.setFont("times", "italic");
     doc.setFontSize(16);
     doc.setTextColor(50, 50, 50);
     doc.setGState(doc.GState({ opacity: 0.25 }));
-    doc.text("Medoune C.", rx + rw / 2, ry + 10, { align: "center" });
+    doc.text("Medoune C.", rx + rw / 2, sigStartY + 13, { align: "center" });
     doc.setGState(doc.GState({ opacity: 1 }));
-    ry += 18;
   }
 
+  // Ligne sous la signature
   doc.setDrawColor(ar, ag, ab);
   doc.setLineWidth(0.6);
-  doc.line(rx + 8, ry, rx + rw - 8, ry);
-  ry += 5;
+  doc.line(rx + 8, sigStartY + 21, rx + rw - 8, sigStartY + 21);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
   doc.setTextColor(20, 20, 20);
-  doc.text("Medoune Camara", rx + rw / 2, ry, { align: "center" });
-  ry += 5;
+  doc.text("Medoune Camara", rx + rw / 2, sigStartY + 26, { align: "center" });
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(110, 110, 110);
-  doc.text("Economist & Business Analyst", rx + rw / 2, ry, { align: "center" });
-  ry += 4;
-  doc.text("Fondateur - ADN Academy", rx + rw / 2, ry, { align: "center" });
+  doc.text("Economist & Business Analyst", rx + rw / 2, sigStartY + 31, { align: "center" });
+  doc.text("Fondateur - ADN Academy", rx + rw / 2, sigStartY + 36, { align: "center" });
 
   // ─── 7. PIED DE PAGE ──────────────────────────────────────────────────────
   doc.setFillColor(248, 249, 250);
