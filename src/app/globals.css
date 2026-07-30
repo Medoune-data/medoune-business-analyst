@@ -1,18 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  /* On booste le bleu pour qu'il soit plus vibrant, moins "vieux cabinet" */
-  --color-accent-primary: #0066FF; 
+  /* ─── Palette "Ledger Ivoire" ────────────────────────────────────────── */
+  --color-paper: #FAF6EF;        /* fond principal, ivoire papier */
+  --color-paper-deep: #F1E8D6;   /* fond de sections alternées / cartes */
+  --color-ink: #17223D;          /* texte principal, bleu-nuit encre */
+  --color-ink-soft: #5C6478;     /* texte secondaire */
+  --color-gold: #B4802C;         /* accent principal — or antique */
+  --color-forest: #33503E;       /* accent secondaire — vert profond */
+  --color-line: #E4D7B8;         /* filets / bordures chaudes */
+
+  /* Conservés pour compatibilité avec les pages pas encore migrées */
+  --color-accent-primary: #B4802C;
   --color-brand-midnight: #020617;
-  --color-silver-silk: #f1f5f9;
-  
+
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 :root {
-  --background: #020617;
-  --foreground: #f1f5f9;
+  --background: #FAF6EF;
+  --foreground: #17223D;
 }
 
 body {
@@ -22,13 +31,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Bordure de finition "Luxe" sur le contour de l'écran */
+/* Bordure de finition sur le contour de l'écran, adaptée au thème clair */
 @media (min-width: 1024px) {
   body::after {
     content: "";
     position: fixed;
     inset: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(23, 34, 61, 0.08);
     pointer-events: none;
     z-index: 50;
   }

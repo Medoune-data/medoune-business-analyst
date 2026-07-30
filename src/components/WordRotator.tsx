@@ -6,7 +6,7 @@ const words = [
   "Structurer la donnée.",
   "Piloter la croissance.",
   "Optimiser les revenus.",
-  "Digitaliser les flux."
+  "Digitaliser les flux.",
 ];
 
 export default function WordRotator() {
@@ -15,24 +15,24 @@ export default function WordRotator() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
-    }, 3000); // Change toutes les 3 secondes
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="h-[1.2em] relative overflow-hidden inline-block w-full">
+    <span className="relative flex items-center h-[1.35em] overflow-hidden w-full">
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -40, opacity: 0 }}
+          initial={{ y: "60%", opacity: 0 }}
+          animate={{ y: "0%", opacity: 1 }}
+          exit={{ y: "-60%", opacity: 0 }}
           transition={{ duration: 0.5, ease: "circOut" }}
-          className="absolute left-0 italic font-light text-gray-500 block w-full"
+          className="absolute left-0 italic font-medium text-gold block w-full leading-[1.35]"
         >
           {words[index]}
         </motion.span>
       </AnimatePresence>
-    </div>
+    </span>
   );
 }

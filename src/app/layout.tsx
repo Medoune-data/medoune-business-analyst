@@ -1,26 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  axes: ["opsz", "SOFT", "WONK"],
+});
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://medoune-business-analyst.vercel.app'),
-  title: "MEDOUNE CAMARA | Economist & Business Analyst",
-  description: "Expert en Revenue Strategy, Segmentation RFM et solutions SaaS à Yamoussoukro. Transformer la donnée en levier de croissance.",
-  
-  // --- VÉRIFICATION GOOGLE (C'est cette ligne qu'il manquait) ---
+  title: "MEDOUNE CAMARA | Economist & Revenue Growth Strategist",
+  description: "Economist & Revenue Growth Strategist à Yamoussoukro — j'aide les PME à structurer leur croissance par la donnée. Analyses, recherches et projets à l'appui.",
+
   verification: {
     google: "IJOBHxSR0g4Ukl-rrMNoH6mxRwiykmkTpu0NBUnxtmY",
   },
 
-  // --- CONFIGURATION OPEN GRAPH ---
   openGraph: {
-    title: 'Medoune Camara | Stratégie & Data',
-    description: 'Expertise en analyse de revenus et déploiement de solutions technologiques.',
-    url: 'https://medoune-business-analyst.vercel.app', 
+    title: 'Medoune Camara | Economist & Revenue Growth Strategist',
+    description: 'J\'aide les PME à structurer leur croissance grâce à la donnée — analyses, stratégie de revenus, écosystèmes numériques.',
+    url: 'https://medoune-business-analyst.vercel.app',
     siteName: 'Medoune Camara Portfolio',
     images: [
       {
@@ -34,7 +37,6 @@ export const metadata: Metadata = {
     type: 'website',
   },
 
-  // --- CONFIGURATION FAVICON ---
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
@@ -47,11 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-brand-midnight antialiased font-sans">
+    <html lang="fr" className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-paper text-ink antialiased font-sans">
         <Navbar />
         {children}
-     
+
 {/* SCRIPT JSON-LD POUR LE BRANDING GOOGLE & IA */}
 <script
   type="application/ld+json"
@@ -60,7 +62,7 @@ export default function RootLayout({
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Medoune Camara",
-      "jobTitle": "Economist & Business Analyst",
+      "jobTitle": "Economist & Revenue Growth Strategist",
       "url": "https://medoune-business-analyst.vercel.app",
       "address": {
         "@type": "PostalAddress",
@@ -76,6 +78,7 @@ export default function RootLayout({
       "knowsAbout": [
         "Business Intelligence",
         "Revenue Strategy",
+        "SME Growth Strategy",
         "SaaS Development",
         "Economic Modeling",
         "Data Analysis"
@@ -88,8 +91,8 @@ export default function RootLayout({
         },
         {
           "@type": "Brand",
-          "name": "StudBay",
-          "description": "Écosystème numérique centralisant l'économie des campus universitaires."
+          "name": "ADN (African Data Network)",
+          "description": "Écosystème de communauté et d'académie data destiné à former la prochaine génération d'analystes africains."
         }
       ]
     })

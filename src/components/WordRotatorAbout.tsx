@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Les mots qui définissent tes différentes casquettes
-const words = ["Business.", "RevenusClients.",  "Stratégique.", "Data."];
+const words = ["Business.", "Revenus Clients.", "Stratégique.", "Data."];
 
 export default function WordRotatorAbout() {
   const [index, setIndex] = useState(0);
@@ -11,20 +10,20 @@ export default function WordRotatorAbout() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
-    }, 3000); // Change de mot toutes les 3 secondes
+    }, 3000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <span className="relative inline-block h-[1.1em] overflow-hidden align-bottom">
+    <span className="relative inline-flex items-center h-[1.3em] overflow-hidden align-bottom min-w-[4ch]">
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
-          initial={{ y: "100%", opacity: 0 }}
+          initial={{ y: "70%", opacity: 0 }}
           animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          className="italic text-gray-500 font-light block"
+          exit={{ y: "-70%", opacity: 0 }}
+          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          className="italic text-gold font-medium block whitespace-nowrap leading-[1.3]"
         >
           {words[index]}
         </motion.span>
