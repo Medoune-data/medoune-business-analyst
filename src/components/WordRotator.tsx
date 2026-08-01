@@ -20,15 +20,15 @@ export default function WordRotator() {
   }, []);
 
   return (
-    <span className="relative flex items-center h-[1.35em] overflow-hidden w-full">
+    <span className="relative inline-block w-full">
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
-          initial={{ y: "60%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-60%", opacity: 0 }}
-          transition={{ duration: 0.5, ease: "circOut" }}
-          className="absolute left-0 italic font-medium text-gold block w-full leading-[1.35]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="italic font-medium text-gold block"
         >
           {words[index]}
         </motion.span>

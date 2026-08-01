@@ -36,11 +36,11 @@ export default function Home() {
           </div>
 
           <div className="mb-12">
-            <h1 className="text-5xl md:text-[7vw] font-serif font-medium tracking-tight leading-[1.1] mb-16 md:mb-8 text-ink">
+            <h1 className="text-4xl sm:text-5xl md:text-[7vw] font-serif font-medium tracking-tight leading-[1.15] mb-6 md:mb-8 text-ink">
               L'expertise pour <br />
               <WordRotator />
             </h1>
-            <p className="text-ink-soft text-lg md:text-2xl leading-relaxed font-light max-w-3xl mt-10 md:mt-0">
+            <p className="text-ink-soft text-lg md:text-2xl leading-relaxed font-light max-w-3xl">
               J'aide les PME et entrepreneurs à transformer leurs données en{' '}
               <span className="text-ink border-b border-gold/40">croissance mesurable</span> —
               segmentation client, stratégie de revenus, écosystèmes numériques. Mes{' '}

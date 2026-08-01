@@ -16,7 +16,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <h1 className="text-6xl md:text-[8vw] font-serif font-medium leading-[0.9] tracking-tighter mb-12 text-ink">
+          <h1 className="text-5xl sm:text-6xl md:text-[8vw] font-serif font-medium leading-[0.95] tracking-tighter mb-12 text-ink">
             L'Analyste <br />
             <WordRotatorAbout />
           </h1>

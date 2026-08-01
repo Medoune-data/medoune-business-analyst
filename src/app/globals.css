@@ -2,13 +2,13 @@
 
 @theme {
   /* ─── Palette "Ledger Ivoire" ────────────────────────────────────────── */
-  --color-paper: #FAF6EF;        /* fond principal, ivoire papier */
-  --color-paper-deep: #F1E8D6;   /* fond de sections alternées / cartes */
+  --color-paper: #FFFFFF;        /* fond principal — blanc pur */
+  --color-paper-deep: #F7F5F0;   /* fond de sections alternées / cartes — gris chaud très léger */
   --color-ink: #17223D;          /* texte principal, bleu-nuit encre */
   --color-ink-soft: #5C6478;     /* texte secondaire */
   --color-gold: #B4802C;         /* accent principal — or antique */
   --color-forest: #33503E;       /* accent secondaire — vert profond */
-  --color-line: #E4D7B8;         /* filets / bordures chaudes */
+  --color-line: #E5E1D8;         /* filets / bordures, neutres */
 
   /* Conservés pour compatibilité avec les pages pas encore migrées */
   --color-accent-primary: #B4802C;
@@ -20,7 +20,7 @@
 }
 
 :root {
-  --background: #FAF6EF;
+  --background: #FFFFFF;
   --foreground: #17223D;
 }
 
